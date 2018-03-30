@@ -1,0 +1,124 @@
+<div id = "DF_VolTabContainer">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#VolSummaryPane" aria-controls="home" role="tab" data-toggle="tab">
+            <%=App.localeData.volumeTab_Summary %>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#VolDocumentListPane" 
+            aria-controls="profile" 
+            role="tab" 
+            dwcmCommand="OpenVolume"
+            data-toggle="tab">
+            <%=App.localeData.volumeTab_AllDocuments %>
+            </a>
+        </li>
+        <li class="extTabButton" role="presentation">
+            <a href="#VolDocumentListPaneExt" 
+            aria-controls="profile" 
+            role="tab" 
+            dwcmCommand="OpenVolumeFilterOrGrouping"
+            data-toggle="tab">
+            </a>
+        </li>
+    </ul>
+
+    <!-- Tab panes "Summary","AllDocuments","Filter/Grouping" -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="VolSummaryPane">
+            <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#accrdInfo">
+					<div class="fnt3vmb accordeonHdr"><%=App.localeData.volSum_Info %>
+               			<span class="mLeft5" style="font-weight: normal;font-style: italic;"><%= this.model.text %></span>
+					</div>
+                </a>
+            </div>
+        </div>
+        <div id="accrdInfo" class="panel-collapse collapse in">
+            <div class="panel-body pbodyM">
+                <!-- Section "Volume Info" -->
+                <div class="row">
+					<div class="vsum_infoLbl col-xs-5 col-sm-3"><%=App.localeData.volSum_Info_Name %></div>
+					<div class="vsum_infoFld"><%= this.model.text %></div>
+                </div>                
+                <div class="row">
+					<div class="vsum_infoLbl col-xs-5 col-sm-3" >
+						<%=App.localeData.volSum_Info_Description %>
+					</div>
+					<div dataField="description" class="vsum_infoFld bindable">n/a</div>
+                </div> 
+                <div class="row">
+					<div class="vsum_infoLbl col-xs-5 col-sm-3" >
+						<%=App.localeData.volumeType %>
+					</div>
+					<div class="vsum_infoFld">
+						<%=this.model.volumeType %>
+               		</div>
+                </div>                
+                <div class="row">
+					<div class="vsum_infoLbl col-xs-5 col-sm-3" >
+						<%=App.localeData.volSum_Info_VolOptions %>
+					</div>
+					<div class="vsum_infoFld">n/a</div>
+                </div>                
+                <div class="row">
+					<div class="vsum_infoLbl col-xs-5 col-sm-3" >
+						<%=App.localeData.volSum_Info_Date %>
+					</div>
+					<div dataField="created" class="vsum_infoFld bindable">n/a</div>
+                </div>                
+                <div class="row">
+					<div class="vsum_infoLbl col-xs-5 col-sm-3" >
+						<%=App.localeData.volSum_Info_FTindex %>
+					</div>
+					<div dataField="isFullTextIndexed" class="vsum_infoFld bindable">n/a</div>
+                </div>
+                <div class="row">
+					<div class="vsum_infoLbl col-xs-5 col-sm-3" >
+						<%=App.localeData.volSum_Info_TotalDocNumber %>
+					</div>
+					<div class="vsum_infoFld">n/a</div>
+                </div>                
+            </div>
+        </div> <!-- #accrdInfo -->
+    </div>
+    <div class="panel panel-default">
+        <div class="">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#accrdFilters">
+                    <div class="fnt3vmb accordeonHdr"><%=App.localeData.volSum_Filters %></div>
+                </a>
+            </h4>
+        </div>
+        <div id="accrdFilters" class="panel-collapse collapse">
+            <!-- Section "Filters" --> 
+            <div class="VolSumTabObjCont panel-body">
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#accrdGroupings">
+                    <div class="fnt3vmb accordeonHdr"><%=App.localeData.volSum_Groupings %></div>
+                </a>
+            </h4>
+        </div>
+        <div id="accrdGroupings" class="panel-collapse collapse">
+            <div class="VolSumTabObjCont panel-body ">
+            </div>
+        </div>
+    </div>
+</div>                    
+        </div>
+        <div role="tabpanel" class="tab-pane DocListDataGrid" id="VolDocumentListPane">
+            <div style="width:100%; height:0.5rem"></div>  
+            <table id="DocListGrid" class="VolDocumentGrid"></table>
+        </div>
+    </div>
+</div> <!-- DF_VolTabContainer -->

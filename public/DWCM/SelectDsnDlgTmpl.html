@@ -1,0 +1,35 @@
+<div id = "SelectDsnDialog"  class="modal " tabindex="-1" role="dialog"  >
+    <style>
+        #SelectDsnDialog .modal-body
+        {
+            padding:0px;
+        }
+        
+        #SelectDsnDialog .fixed-table-header
+        {
+            height :0px;
+        }
+    </style>       
+    <div class="modal-content loginPageGradient" >
+        <div class="modal-header" style="color:#19438C;">
+            <h4 class="modal-title" ><%= App.localeData.SelectDsn_Title %></h4>
+        </div>    
+        <div class="modal-body" >
+            <table  id="tableDsnList" />               
+        </div>
+        <div class="modal-footer">
+            <button id="btnOK"
+               type="button" 
+               class="btn btn-success" 
+               data-dismiss="modal"><%= App.localeData.btnOK %>
+            </button>
+            <button id="btnCancel"
+               type="button" 
+               class="btn btn-primary" 
+               data-dismiss="modal"><%= App.localeData.btnCancel %>
+            </button>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<link href="/dfm_web/DWCM/js/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link  href="/dfm_web/GetStaticRes_dwcm?Module=DWCM/DwcmIndex.css" type="text/css" rel="stylesheet">  
+	<link href="/dfm_web/DWCM/js/bootstrapTable/bootstrap-table.css" rel="stylesheet">
+	<link href="/dfm_web/DWCM/js/bootstrap-select-1.12.1/css/bootstrap-select.css" rel="stylesheet">
+</head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<body  >
+<div class="pageContainer " style = "width: 100vw;height: 100vh;" >
+    
+    <style>
+		
+		
+		@media all and (orientation: portrait)
+		{
+			.waitFirstLoading
+			{
+				width:30vmax;
+				height:30vmax;
+				position: absolute;
+				top: 35vmax;
+				left: calc(50vw - 15vmax);
+			}
+		}
+
+		
+		@media all and (orientation: landscape)
+		{
+			.waitFirstLoading
+			{
+				width:30vmax;
+				height:30vmax;
+				position: absolute;
+				top: calc(50vh - 16vmax);
+				left: 35vmax;
+			}
+		}
+		
+	</style>
+    <img src="/dfm_web/DWCM/image/loading-circle.gif" 
+    	class="waitFirstLoading">
+</div>
+
+
+	<script data-main="/dfm_web/GetStaticRes_dwcm?Module=DWCM/appDebug.js" src="/dfm_web/DWCM/js/require/require.js"></script>
+</body>
+</html> 

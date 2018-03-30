@@ -1,0 +1,699 @@
+//@import (reference) url('/dfm_web/DWCM/js/bootstrap/3.3.7/less/bootstrap.less');
+//@import url('/dfm_web/GetStaticRes_dwcm?Module=DWCM/less/LoginPage.less');
+//@import url('/dfm_web/GetStaticRes_dwcm?Module=DWCM/less/EmailSendDlg.less');
+
+@import (reference) url('js/bootstrap/3.3.7/less/bootstrap.less');
+@import url('less/LoginPage.less');
+@import url('less/EmailSendDlg.less');
+
+
+@colorDlgHeader: #19438C;
+@colorDlgHeader: #19438C;
+@colorDlgBorder: #026a90;
+@loginPageGradientStart:#e1f7f6;
+@loginPageGradientEnd:#169d98;
+
+/*screen width */
+@lxs: ~"(max-width: 360px)";
+@lxse: ~"(max-width: 500px)";
+@lsm: ~"(max-width: 750px)";
+@lmd: ~"(max-width: 970px)";
+@llg: ~"(max-width: 1170px)";
+
+@mxs: ~"(min-width: 360px)";
+@mxse: ~"(min-width: 500px)";
+@msm: ~"(min-width: 750px)";
+@mmd: ~"(min-width: 970px)";
+@mlg: ~"(min-width: 1170px)";
+
+@orp: ~"(orientation: portrait)";
+@orl: ~"(orientation: landscape)";
+
+/*font sizes*/
+@fontSize_Header: 3vmax;
+@fontSize_Caption: 2vmax;
+
+@screenWidth: '$(window).height()';
+
+@media @mxs
+{
+    .visible-xxs {
+        display: block !important;
+    }
+    .hidden-xxs {
+        display: none !important;
+    }
+}
+
+/*mixins begin*/
+.fntHeader
+{
+	font-size: @fontSize_Header;
+	color: @colorDlgHeader;
+}
+
+.headerColor
+{
+	color: @colorDlgHeader;
+}
+
+.fnt2vm{
+    font-size: 2.3vmax;
+}
+
+.fnt2vmb{
+    .fnt2vm;
+    font-weight: bold;
+}
+
+
+.fnt3vm{
+    font-size: 2.5vmax;
+}
+
+.fnt3vmb{
+    .fnt3vm;
+    font-weight: bold;
+}
+
+.fnt4vm{
+    font-size: 3.5vmax;
+}
+
+.fnt4vmb{
+    .fnt4vm;
+    font-weight: bold;
+}
+
+
+
+.cursorHand {
+    cursor: pointer; 
+    cursor: hand; 
+}
+.dialogBorder
+{
+    border: 2px solid;
+    border-color: @colorDlgBorder;
+    border-radius: 10px;
+}
+
+.btColxx
+{
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  float: left;		
+}
+
+.frmGroupOfControlsTitle
+{
+	.fnt2vmb; 
+	.headerColor;
+}
+
+
+.frmIt_mTop
+{
+	margin-top: 5px;
+}
+.frmIt_mBtm
+{
+	margin-bottom: 15px;
+}
+
+.frmCtrl11_4
+{
+	.btColxx;
+	@media @orp{
+		.col-xs-11;
+	}
+	
+	@media @orl{
+		.col-xs-4;
+	}
+}
+
+.frmCtrl12_4
+{
+	.btColxx;
+	@media @orp{
+		.col-xs-12;
+	}
+	
+	@media @orl{
+		.col-xs-4;
+	}
+}
+
+
+.frmCtrl12_8
+{
+	.btColxx;
+	@media @orp{
+		.col-xs-12;
+	}
+	
+	@media @orl{
+		.col-xs-8;
+		padding-bottom: 10px;
+	}
+}
+.frmCtrl12_2
+{
+	.btColxx;
+	@media @orp{
+		.col-xs-12;
+	}
+	
+	@media @orl{
+		.col-xs-2;
+	}
+}
+
+.frmCtrl12_10
+{
+	.btColxx;
+	@media @orp{
+		.col-xs-12;
+	}
+	
+	@media @orl{
+		.col-xs-10;
+	}
+}
+
+
+.frmCtrl10_4
+{
+	.btColxx;
+	@media @orp{
+		.col-xs-10;
+	}
+	
+	@media @orl{
+		.col-xs-4;
+		padding-bottom: 10px;
+	}
+}
+
+.frmRadio
+{
+	.col-xs-11;
+	.col-xs-offset-1;
+}
+
+/*mixins end*/
+
+
+//@aa:2em;
+//@myfunc:~`aplusb(1,2)`;
+
+
+/* Common styles begin */
+.nullSize{
+	width : 0px;
+	height : 0px;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+	visibility: hidden;
+}
+
+.nullHeight
+{
+	height: 0px;
+	overflow: hidden;
+}
+
+.nullHeightEx
+{
+	.nullHeight;
+	padding: 0px;
+	margin: 0px;
+}
+
+.invisible
+{
+	visibility: hidden;
+}
+
+/* Common styles end */
+
+/* pages begin */
+.loginPageGradient
+{
+    background: linear-gradient(to right, @loginPageGradientStart, @loginPageGradientEnd);
+}
+
+.fullscreenbackground {
+    .loginPageGradient;
+    overflow: hidden;        
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.inlineError{
+	padding-left:10px; 
+	color:red;
+}
+
+.inlineSuccess{
+	padding-left:10px; 
+	color:green;
+}
+
+.inlineWarning{
+	padding-left:10px;
+	color: #8a6d3b;
+}
+
+.msgError{
+	color:red;
+}
+.msgSuccess{
+	color:green;
+}
+/*master page begin*/
+
+@pathBarWidth: 90%;
+@xs_pathBarWidth:85%;
+#pathBarContainer
+{
+    position: absolute;
+    border-style: groove;
+    top:0.4em;
+    left:5px;
+    bottom:0.2em; 
+    width:@pathBarWidth;
+    @media @lxs{
+        width: @xs_pathBarWidth;
+    }
+    padding-right: 5px;
+    border-radius: 8px;
+
+}
+#appToolbar{
+    position: absolute;
+    left: @pathBarWidth;
+    @media @lxs{
+        left: @xs_pathBarWidth;
+    }
+    margin-top: 0.2em;
+    margin-left: 0.6em;
+}
+#appToolbar .btn{
+    margin-bottom: 10px;
+}
+
+
+
+#rootNodePane
+{
+    /*Displays DF,WF,QST icons and DDInfo */
+    @media (orientation: portrait){
+        padding-left: 3vw;
+    }
+    @media (orientation: landscape){
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
+
+
+
+#rootNodePane img{
+    .cursorHand;
+}
+
+#rootNodePane .navButtonsPane{
+    @media (orientation: portrait){
+        display: inline-block;
+    }    
+    @media (orientation: landscape){    
+        display: inline-block;
+        max-width: 15%;
+    }
+}
+
+#rootNodePane .itemCell{
+    /*ItemCell = img + .itemText  */
+    @media (orientation: portrait){
+        display: inline-block;
+    }
+    @media (orientation: landscape){
+        padding-top: 2vh;
+    }
+}
+
+
+#rootNodePane .itemText{
+    color:@colorDlgHeader;
+    font-size: @fontSize_Header;
+    @media (orientation: portrait){
+        width: 15vmax;;
+        text-align: center;
+    }
+    @media (orientation: landscape){
+        width: 15vmax;
+        margin-left: -3vw;
+        text-align: center;
+    }
+}
+
+#rootNodePane .infoPaneContainer{
+    padding-top: 8vh;
+    min-width: 85%;
+    @media (orientation: landscape){
+        display: inline-block;
+        float: right;
+    }        
+    @media (orientation: portrait){
+    } 
+    
+    
+}
+
+#rootNodePane .infoPane{
+    margin: 0 auto;
+    max-width: 80%;
+    padding: 2vmax;
+    .dialogBorder;
+    .loginPageGradient;
+    /*
+    position: absolute;
+    padding: 2vmax;
+    border: 2px solid;
+    border-color: #026a90;
+    border-radius: 10px;
+    background-color: #70c4e3; 
+    color: @colorDlgHeader;
+    */
+}
+
+.infoBigCaption
+{
+    font-size: @fontSize_Header;
+    font-weight: bold;
+    padding-bottom: 3vh;
+    text-align: center;
+}
+#rootNodePane .infoTable{
+    max-width: 100%;
+}
+#rootNodePane .infoCaption
+{
+    font-size: @fontSize_Caption;
+}
+
+
+/*DF_tabContainer: AllAreas/AllVolumes */
+#DF_tabContainer .itemCell
+{
+    padding-top: 0.7em;
+    padding-left: 0.7em;
+    display: inline-block;
+    float: left;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    width: 10vmax;
+    height: 18vmax;
+}
+
+#DF_tabContainer img
+{
+    .cursorHand; 
+}
+      
+#DF_tabContainer .itemText{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 1em;     /* fallback */
+    max-height: 3em;      /* fallback */
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    padding-top: 0.2em;
+    text-align: center;
+    .cursorHand;
+}
+       
+#DF_tabContainer .graphIcon.ddTreeMiddleIcons, #DF_VolTabContainer .graphIcon.ddTreeMiddleIcons
+{
+    height:7vmax;
+}
+
+/* Volume Summary tab begin*/
+
+.dfVolSumaryPageBigIcon
+{
+    height:20vmin;
+    @media @orp{
+        margin-top: 5vmin;
+        margin-left: -2vmin;
+        display: inline-block;
+    }
+    @media @orl{
+    }
+}
+
+#dfVolSumaryPageR1C0{
+	@media (min-width: 100px) AND (max-width: 430px){
+    	width: 18vmax; // width of the space for dfVolSumaryPageBigIcon
+	}
+	@media (min-width: 430px) AND (max-width: 450px){
+    	width: 20vmax; // width of the space for dfVolSumaryPageBigIcon
+	}
+
+   	width: 25vmax; // width of the space for dfVolSumaryPageBigIcon
+}
+
+.volDescriptCol{
+    /* description column in Volume Info section ("Name + Description" and "Creatiion date + Full text")*/
+    width: 65vmin;
+    float: left;
+}
+
+#DF_VolTabContainer .nav>li>a
+{
+    //decrease tab button size
+    padding: 0px 8px;
+}
+
+
+#DF_VolTabContainer .itemCell 
+{
+    padding-top: 0.7em;
+    padding-left: 0.7em;
+    display: inline-block;
+    float: left;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    width: 14vmax;
+}
+
+#DF_VolTabContainer .accordeonHdr
+{
+	padding-left:15px;
+	background-color: #E3EBFF;	
+}
+
+#DF_VolTabContainer .pbodyM{
+	padding-left:30px;
+}
+
+#DF_VolTabContainer .vsum_infoLbl{
+	text-align: right;
+	font-size:18px;
+	font-weight: bold;
+	display: inline-block;
+}
+
+#DF_VolTabContainer .vsum_infoFld{
+	.col-xs-6;
+	padding-left: 10px;
+	text-align: left;
+	font-size:18px;
+	display: inline-block;
+}
+
+
+
+/* Volume Summary tab end*/
+/* Volume Document List grid  begin*/
+
+.DocListDataGrid .page-list
+{
+    // hide "n records per page" label
+    visibility: hidden;
+}
+
+.DocTypeColumn
+{
+	color:transparent;
+}
+
+.DocListDataGrid tbody
+{
+    font-size: 12px;
+}
+
+#VolDocumentListPane div.pull-right, #VolDocumentListPaneExt div.pull-right
+{
+    @media @orp{
+        /*move pager up */
+        margin-top: -10px;
+    }
+}
+
+
+/* Volume Document List grid  end*/
+
+/* Volume All Documents begin*/
+/* Volume All Documents end*/
+/*master page end*/
+
+/* pages end */
+
+.modal-title
+{
+    color: @colorDlgHeader;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.modal-content
+{
+    font-size: 1em;
+    max-height: 90vh;
+    max-width:80vw;
+    overflow: auto;
+}
+
+.modal-content .form-group
+{
+    height: 1.3em;
+}
+.modal-content .form-control
+{
+    height: 1.8em;
+}
+
+.modal-content input,.modal-content .btn
+{
+    font-size: 1em;
+}
+
+.modal-body .table .table
+{
+     background-color: transparent;
+}
+
+
+/* VolumeForm */
+.VolumeForm
+{
+	padding: 10px; 
+	margin-bottom: 10px;
+	overflow: auto;
+	@media @orp{
+		max-height: 90vh; 
+	}
+	@media @orl{
+		max-height: 80vh; 
+	}
+	
+}
+
+.volSearchDialog
+{
+	@media @orp{
+		height:90vh;
+		overflow: auto;
+	}
+	@media @orl{
+		height:80vh;
+		overflow: auto;
+	}
+}
+
+
+/* center bootstrap model dialog  begin */
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.modalContCenter {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+}    
+/* center bootstrap model dialog  end */
+
+ 
+
+
+
+/*vidgets   begin */
+.pathBar
+{
+    border-style: none;
+    top:5px;
+    left:5px;
+    bottom:5px; 
+    font-size: 1.3em;
+}
+.pathBarFolder{
+    .cursorHand;
+}
+.pathBarDelimiter
+{
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+.pathBarEllipsis
+{
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+      
+.pathBarDelimiter:before
+{
+    content: "\\";    
+}
+.pathBarEllipsis:before
+{
+    font-weight: bold;
+    content: "...";    
+}
+/*vidgets   end */
+
+/* rotateIcon begin */
+.rotateIcon {
+    display: inline-block;
+	vertical-align: middle;
+    -webkit-animation: rotateIcon 2s infinite linear;
+    animation: rotateIcon 2s infinite linear;
+}
+	
+@keyframes rotateIcon {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}	
+}
+/* rotateIcon end */

@@ -1,0 +1,965 @@
+<Dialogs>
+<Dialog id="LoginDialog">
+<![CDATA[
+<div id="LoginDialog" class="modal fade" tabindex="-1" role="dialog">
+  <style>
+    
+    #LoginDialog .modal-backdrop{
+        display:none !important;
+    } 
+    
+    label
+    {
+        text-align: right;
+    }
+    
+    #LoginDialog input[type=checkbox]
+    {
+      -ms-transform: scale(2); /* IE */
+      -moz-transform: scale(2); /* FF */
+      -webkit-transform: scale(2); /* Safari and Chrome */
+      -o-transform: scale(2); /* Opera */
+    }
+    @media only screen and (min-width:768px)
+    {
+        #LoginDialog input[type=checkbox]
+        {
+            margin-top:0.7em;
+        }
+        #LoginDialog .modal-dialog
+        {
+            width:70%;
+        }
+    }
+    
+
+  </style>
+  <div class="modal-dialog"  >
+    <div class="modal-content loginPageGradient">
+      <div class="modal-header">
+        <h4 class="modal-title "><%= App.localeData.loginPage_ConnectToServer %></h4>
+      </div>
+      <div class="modal-body">
+        <!--modal body begin -->
+        
+        
+        <form class="form-horizontal">
+            <fieldset>
+                <!-- User Name-->
+                <div class="form-group">
+                  <label class="col-xs-5 col-sm-4 control-label" ><%= App.localeData.loginPage_UserName %></label>  
+                  <div class="col-xs-7">
+                      <input  id="txUserName" type="text"  
+                              dataField = "userName"
+                              class="form-control input-md bindable" 
+                              placeholder="User name"
+                              value=<%= Appc.userName("new") %>
+                              >
+                  </div>
+                </div>
+                <!-- Password-->
+                <div class="form-group">
+                  <label class="col-xs-5 col-sm-4 control-label" ><%= App.localeData.loginPage_Password %></label>  
+                  <div class="col-xs-7">
+                      <input  id="txUserName" 
+                              dataField = "userPassword"  
+                              type="password" 
+                              class="form-control input-md bindable" 
+                              placeholder="<%= App.localeData.loginPage_Password %>"
+                              value=<%= Appc.password("new") %>
+                              >
+                  </div>
+                </div>
+               
+                <div class="form-group ">
+                  <label class="col-xs-5 col-sm-4  control-label" >
+                      <%= App.localeData.loginPage_RememberCredentials %>
+                  </label>
+                  <div class="col-xs-2">
+                      <input type="checkbox" 
+                          name="checkboxes" 
+                          class="bindable saveWithoutValidation" 
+                          dataField="rememberCredentials"  
+                          <%= ((Appc.rememberCredentials()?'checked':'')) %>
+                          >
+                  </div>
+                </div>
+            </fieldset>
+        </form>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ><%= App.localeData.loginPage_ConnectToServer %></button>
+      </div>
+    </div>
+  </div>
+</div>
+]]>    
+</Dialog>
+<Dialog id="DocViewDialog">
+<![CDATA[
+<div id="DocViewDialog" style="height: 100%;width: 100%;" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="">
+        <div class="modal-content" style="height: 95vh;width: 100%;">
+          <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>          
+           </button>
+           <h4 class="modal-title ">View Document</h4>
+          </div>
+          <div class="modal-body" style="height: 90vh">
+            <!--modal body begin -->
+            <iframe class="doc" style="width:100%;height:100%;" src="{0}"></iframe>
+          </div>
+        </div>
+    </div>
+</div>
+]]>    
+</Dialog>
+<Dialog id="PdfViewer">
+<![CDATA[
+    <iframe id="PdfViewer" class="doc" style="width:100%;height:100%;position: absolute; top:0px;"  src="{0}"></iframe>
+]]>        
+</Dialog>
+<Dialog id="SimpleDocViewer">
+<![CDATA[
+<div id="SimpleDocViewer" style="width:100%;height:100vh;position: absolute; top:0px;background:white">
+	<h3 style="display: inline-block;margin-top: 5px;margin-left: 0px;padding-left: 20px;">{0}</h3>
+	<button type="button" style="margin-top:3px;margin-bottom:3px; margin-right:3px;" 
+		class="btn btn-danger pull-right dropdown-toggle glyphicon glyphicon-remove" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	</button>				
+	<iframe style="width:100%;height:95vh;" id="PdfViewer" 
+		 src="{1}">
+	</iframe>
+</div>	
+]]>      
+</Dialog>
+<Dialog id="WholeMainPaneDialog">
+<![CDATA[
+<div  class="mpall WholeMainPaneDialog" style="height:100vh" > 
+<div class="row">
+	<div class="col-xs-8">
+		<h3 class="fntHeader" style="display:inline-block;padding-left:20px">
+			<%= this.model.title %>
+		</h3>
+	</div>
+	<div class="col-xs-4 toolbarDiv" >
+		<button type="button" style="margin-top:3px;margin-bottom:3px; margin-right:3px;"
+			class="toolbarBtn btn btn-danger pull-right dropdown-toggle glyphicon glyphicon-remove" 
+			command="cancel"
+			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		</button>
+		<div class="btn-group menuBtnDiv pull-right" style="display:inline-block;">
+		  <button type="button"
+				style="margin-top:3px;margin-bottom:3px; margin-right:3px;"
+				class="toolbarBtn menuBtn btn btn-primary dropdown-toggle glyphicon glyphicon-align-justify "
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  </button>
+		  <ul id="menuItems" class="dropdown-menu pull-right">
+		  </ul>
+		</div>
+	</div>
+</div>
+<%= this.model.strHtmlContent %>
+</div>
+]]>        
+</Dialog>
+<Dialog id="GenSettingsDialog">
+<![CDATA[
+<div id="GenSettingsDialog" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content loginPageGradient">
+      <div class="modal-header">
+        <h4 class="modal-title "><%= App.localeData.generalSettings %></h4>
+      </div>
+      <div class="modal-body">
+        <!--modal body begin -->
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="form-group ">
+                  <label class="col-xs-8 col-sm-6  control-label" >
+                      <%= App.localeData.loginPage_RememberCredentials %>
+                  </label>
+                  <div class="col-xs-4">
+                      <input type="checkbox" 
+                          name="checkboxes" 
+                          class="bindable saveWithoutValidation" 
+                          dataField="rememberCredentials"  
+                          <%= ((Appc.rememberCredentials()?'checked':'')) %>
+                          >
+                  </div>
+                </div>  
+                <!-- Text input-->
+                <div class="form-group">
+                  <label class="col-xs-8 col-sm-6 control-label" for="textinput">
+                      <%= App.localeData.lbldataGridPageSize %>
+                  </label>  
+                  <div class="col-xs-4">
+                      <input  id="txDataGridPageSize" type="text"  
+                              dataField = "doclistPageSize"
+                              class="form-control input-md bindable" 
+                              placeholder="User name"
+                              value=<%= App.Models.settings.get(Appn.Model.Settings.doclistPageSize) %>
+                              >
+                  </div>
+                </div>
+            </fieldset>
+        </form>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" >OK</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+]]>        
+</Dialog>
+<Dialog id="VolumeNameLabel">
+<![CDATA[
+<h3 id="VolumeNameLabel" style="display:inline;padding-left:20px;vertical-align:middle;">{0}
+<span class="label label-default" style="padding-left:20px;padding-top:8px;" >{1}</span></h3>
+]]>    
+</Dialog>
+<Dialog id="InfoDD">
+<![CDATA[
+        <div id="infoPane">
+        <style>
+           #infoPane{
+                width:60%;
+                height:50%;
+                margin-left: 20%;
+                margin-top:15%;
+                border: 2px solid;
+                border-color: #026a90;
+                border-radius: 10px;
+                background-color: #70c4e3; 
+            }
+            .infoBigCaption
+            {
+                font-size: 4vh;
+                font-weight: bold;
+                padding-top: 6vh;
+                padding-bottom: 3vh;
+                text-align: center;
+            }
+            .infoTable{
+                width:80%;  
+                margin-left: 10%;
+            }
+            .infoCaption
+            {
+                font-size: 2.5vh;
+            }
+            
+        </style>       
+            <div class="infoBigCaption">
+                Data Dictionary: 
+                <span class="label bgcolorWhite"><%= App.Models.settings.get(Appn.Model.Settings.dsn) %></span>
+            </div>
+            <table class="table infoTable">
+                <tbody>
+                    <tr class="infoCaption">
+                        <th>Creation date: </th>
+                        <td><span class="label bgcolorWhite">n/a</span></td>
+                    </tr>
+                    <tr class="infoCaption">
+                        <th>Database type: </th>
+                        <td><span class="label bgcolorWhite">n/a</span></td>
+                    </tr>
+                    <tr class="infoCaption">
+                        <th>Database server:  </th>
+                        <td><span class="label bgcolorWhite">n/a</span></td>
+                    </tr>
+                    <tr class="infoCaption">
+                        <th>Volume registered: </th>
+                        <td><span class="label bgcolorWhite"><%= Appc.getVolumeCount()  %></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+]]>    
+</Dialog>
+<Dialog id="DF_tabContainer">
+<![CDATA[
+       <div id = "DF_tabContainer">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active AllAreasPane">
+                    <a href="#AllAreasPane" aria-controls="home" role="tab" data-toggle="tab">
+                    <%=App.localeData.ddtree_AllAreas %>
+                    </a>
+                </li>
+                <li role="presentation" class="AllVolumesPane">
+                    <a href="#AllVolumesPane" aria-controls="profile" role="tab" data-toggle="tab">
+                    <%=App.localeData.ddtree_AllVolumes %>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane AllAreasPane" >
+                </div>
+                <div role="tabpanel" class="tab-pane AllVolumesPane" >...</div>
+            </div>
+        </div> <!-- DF_tabContainer -->
+]]>    
+</Dialog>
+<Dialog id="ddtTblAreaInfoColumn">
+<![CDATA[
+        <div class="ddtTblInfoColumn">
+            <div class="ddtTblInfoHead">
+                <span ><%= this.model.nodeInfo.typeNode  %>:</span>
+                <span class="label bgcolorWhite"><%= this.model.text  %></span>
+            </div>
+            <table>
+                <tbody>   
+                    <tr>
+                        <td>
+                            <span class="ddtTblInfoCaption">Type:</span>
+                            <span><%= this.model.nodeInfo.typePosition  %></span>
+                        </td>
+                        <td>
+                            <span class="ddtTblInfoCaption">Creation date:</span>
+                            <span>n/a</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="ddtTblInfoCaption">Sub Areas:</span>
+                            <span><%= this.model.nodeInfo.subAreas  %></span>
+                            <span class="ddtTblInfoCaption">Volumes:</span>
+                            <span><%= this.model.nodeInfo.volumes  %></span>
+                        </td>
+                        <td>
+                            <span class="ddtTblInfoCaption">Father:</span>
+                            <span><%= this.model.nodeInfo.parentNodeCaption %></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+]]>    
+</Dialog>
+<Dialog id="ddtTblVolumeInfoColumn">
+<![CDATA[
+        <div class="ddtTblInfoColumn">
+            <div class="ddtTblInfoHead">
+                <span ><%= this.model.nodeInfo.typeNode  %>:</span>
+                <span class="label bgcolorWhite"><%= this.model.text  %></span>
+            </div>
+            <table>
+                <tbody>   
+                    <tr>
+                        <td>
+                            <span class="ddtTblInfoCaption">Type:</span>
+                            <span><%= this.model.nodeInfo.typeVolume  %></span>
+                        </td>
+                        <td>
+                            <span class="ddtTblInfoCaption">Creation date:</span>
+                            <span>n/a</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="ddtTblInfoCaption">Documents:</span>
+                            <span>n/a</span>
+                        </td>
+                        <td>
+                            <span class="ddtTblInfoCaption">Size:</span>
+                            <span>n/a</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+]]>    
+</Dialog>
+<Dialog id="AttachmentPaneContent">
+<![CDATA[
+<table id="attListDataGrid" >
+</table>
+]]>    
+</Dialog>
+<Dialog id="VolumeForm">
+<![CDATA[
+<div id="volumeFormStdContainer">
+	<form id="volumeFormStd" class="form-horizontal VolumeForm"   >
+	  <div class="form-group"> 
+	  </div>
+	</form>
+</div>
+]]>    
+</Dialog>
+<Dialog id="SearchForm">
+<![CDATA[
+<div id="searchFormContainer">
+ <div id="exprEditor" class="col-sm-offset-2 col-sm-10 volSearchDialog" >
+ </div>
+ </div>
+]]>
+</Dialog>
+<Dialog id="AddAttachmentForm">
+<![CDATA[
+<div id="volumeFormStdContainer">
+	<form id="AddAttachmentForm" class="form-horizontal" style="padding: 10px; margin-bottom: 10px;max-height: 70vh; overflow: auto;"  >
+		<div class="form-group">
+			<label class="control-label col-sm-2" ></label>
+			<div class="col-sm-10">
+				 <input id="file-choosen" type="file" name="file" size="50">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" ><%= App.localeData.attachmentName %></label>
+			<div class="col-sm-10">
+			  <input name="attachmentName" class="form-control" >
+			</div>
+		</div>
+	</form>
+</div>
+]]>    
+</Dialog>
+<Dialog id="AutoFilterDialog">
+<![CDATA[
+<div  id="AutoFilterDialog" class="mpall WholeMainPaneDialog" style="height:100vh" > 
+	<div class="row" >
+		<div class="col-xs-7">
+			<h3 class="fntHeader" style="display:inline-block;padding-left:20px">
+				<%= App.localeData.dgrid_menuCmd_Autofilter %>
+			</h3>
+		</div>
+		<div class="col-xs-5">
+			<button type="button" style="margin-top:3px;margin-bottom:3px; margin-right:3px;"
+			    command="cancel"
+				class="toolbarBtn btn btn-danger pull-right glyphicon glyphicon-remove ">
+			</button>
+
+			<button type="button" style="margin-top:3px;margin-bottom:3px; margin-right:3px;"
+				command="ok"
+				class="toolbarBtn btn btn-success pull-right glyphicon glyphicon-ok">
+			</button>
+		</div>
+	</div>
+	<div id="dialogContent" >
+		<div class="row fieldSelector" style="padding-left:10px;">
+			<div class="col-xs-12 " >
+				<select class="selectpicker fieldList " data-width="95%">
+				</select>
+			</div>
+		</div>
+		<div class="valueSelector" style="height:86vh;backgroud-color:red;"> 
+			<table class="valueSelectorTable"
+               data-toggle="table"
+               data-toolbar="#toolbar"
+               data-height="460"
+               data-click-to-select="true" >
+            	<thead>
+					<tr>
+						<th data-field="selected" data-checkbox="true"></th>
+						<th data-field="fval">Values</th>
+					</tr>
+	            </thead>
+        	</table>
+		</div>
+	<div>
+</div>
+]]>        
+</Dialog>
+<Dialog id="AppSettingsDlg">
+<![CDATA[
+<div id="AppSettingsDlgContainer" style="overflow:auto">
+	<div id="AppSettingsDlg" class="col-sm-offset-2 col-sm-10 " >
+		<div class="panel-group" id="accordAppSet">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordAppSet" href="#accrdGenSettings">
+							<div class="fnt3vmb"><%= App.localeData.generalSettings %></div>
+						</a>
+					</div>
+				</div>
+				<div id="accrdGenSettings" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="email">
+								<%= App.localeData.lbldataGridPageSize %>
+							</label>
+							<div class="col-sm-10">
+							  <input class="bindable form-control" 
+							  dataField="doclistPageSize"  
+							  >
+							</div>
+						</div>
+						<div class="form-group ">
+						  <label class="col-xs-8 col-sm-6  control-label" >
+							  <%= App.localeData.loginPage_RememberCredentials %>
+						  </label>
+						  <div class="col-xs-4">
+							  <input type="checkbox" 
+								  name="checkboxes" 
+								  class="bindable saveWithoutValidation" 
+								  dataField="rememberCredentials"  
+								  >
+						  </div>
+						</div>  
+					</div>
+				</div>
+			</div>   
+			
+			
+			<div class="panel panel-default" >
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordAppSet" href="#accrdSMTPSettings">
+							<div class="fnt3vmb"><%= App.localeData.smtpSettings %></div>
+						</a>
+					</h4>
+				</div>
+				<div id="accrdSMTPSettings" class="panel-collapse collapse" >
+					<div class="panel-body" >
+
+							<div class="form-group">
+								<label class="control-label col-xs-12">
+									<%= App.localeData.hostAddress %>
+								</label>
+								<div class="col-xs-12">
+								  <input class="bindable form-control" 
+								  dataField="smtpSettings.host" 
+								  placeHolder="<%= App.localeData.smtpPhold_HostAddress %>" 
+								  >
+								</div>
+							</div>	
+							<div style="height:50px"></div>
+							<div class="form-group">
+								<label class="control-label col-xs-3">
+									<%= App.localeData.port %>
+								</label>
+								<div class="col-xs-9">
+								  <input class="bindable form-control" 
+								  dataField="smtpSettings.port"  
+								  >
+								</div>
+							</div>	
+							<div style="height:25px"></div>
+							<div class="form-group">
+								<label class="control-label col-xs-3">
+									<%= App.localeData.timeout %>
+								</label>
+								<div class="col-xs-9">
+								  <input class="bindable form-control" 
+								  dataField="smtpSettings.timeout"  
+								  >
+								</div>
+							</div>
+							<div style="height:25px"></div>
+							<div class="form-group">
+								<label class="control-label col-xs-7">
+									<%=App.localeData.smtpSecurityLayer%>
+								</label>
+							
+								<select class="bindable selectpicker col-xs-12" 
+									    type="select"
+										dataField="smtpSettings.securityLayer" 
+										data-width="100%" >
+										
+<option value="0" dataIndex="0"><%= App.localeData.smtpSecurityLayer_None %></option>
+<option value="1" dataIndex="1"><%= App.localeData.smtpSecurityLayer_SSL %></option>
+<option value="2" dataIndex="2"><%= App.localeData.smtpSecurityLayer_TLS %></option>
+							
+								</select>	
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-7">
+									<%= App.localeData.smtpAuthentication %>
+								</label>
+							
+								<select class="bindable selectpicker col-xs-12" 
+									type="select"
+									dataField="smtpSettings.authentication"
+									data-width="100%" >
+									
+<option value="0" dataIndex="0"><%= App.localeData.smtpAuthentication_Default %></option>
+<option value="1" dataIndex="1"><%= App.localeData.smtpAuthentication_Login %></option>
+<option value="2" dataIndex="2"><%= App.localeData.smtpAuthentication_Plain %></option>
+<option value="3" dataIndex="3"><%= App.localeData.smtpAuthentication_DigestMD5 %></option>
+<option value="4" dataIndex="4"><%= App.localeData.smtpAuthentication_NTLM %></option>
+<option value="5" dataIndex="5"><%= App.localeData.smtpAuthentication_Auto %></option>
+<option value="6" dataIndex="6"><%= App.localeData.smtpAuthentication_None %></option>
+							
+								</select>	
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-12">
+									<%= App.localeData.smtpSenderAddress %>
+								</label>
+								<div class="col-xs-12">
+								  <input class="bindable form-control" 
+								  dataField="smtpSettings.senderAddress" 
+								  placeHolder="<%= App.localeData.smtpPhold_SenderAddress %>" 
+								  >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-12">
+									<%= App.localeData.smtpPersonal %>
+								</label>
+								<div class="col-xs-12">
+								  <input class="bindable form-control" 
+								  dataField="smtpSettings.personal"  
+								  placeHolder="<%= App.localeData.smtpPhold_Personal %>" 
+								  >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-12">
+									<%= App.localeData.smtpRecipientAddress %>
+								</label>
+								<div class="col-xs-12">
+								  <input class="bindable form-control" 
+								  dataField="smtpSettings.recipientAddress"  
+								  placeHolder="<%= App.localeData.smtpPhold_RecipientAddress %>" 
+  								  >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-12">
+									<%= App.localeData.smtpUserName %>
+								</label>
+								<div class="col-xs-12">
+								  <input class="bindable form-control" 
+								  dataField="smtpSettings.userName"  
+								  >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-12">
+									<%= App.localeData.smtpPassword %>
+								</label>
+								<div class="col-xs-12">
+								  <input class="bindable form-control" 
+								  type="password" 
+								  dataField="smtpSettings.smtpPassword"  
+								  >
+								</div>
+							</div>
+							<div class="form-group">
+								<button 
+								class="btn btnSendTestingMessage btn-success pull-right" 
+								style="margin-top:1em" >
+									<i class="">
+										<span class="glyphicon glyphicon-envelope" />
+									</i> <%= App.localeData.smtpSendTestingMessage %>
+								</button>
+								
+							</div>
+					</div>
+				</div>
+			</div>             
+           
+        </div> <!-- accordAppSet --> 
+	</div>  <!-- AppSettingsDlg -->    
+</div> <!-- AppSettingsDlgContainer -->
+]]>    
+</Dialog>
+<Dialog id="SaveSelectedAs">
+<![CDATA[
+<div id="volumeFormStdContainer">
+	<form id="SaveSelectedForm" class="form-horizontal" style="padding: 10px; margin-bottom: 10px;max-height: 70vh;"  >
+	
+		<div class="form-group"> 
+			<div class="frmRadio">
+				<label>
+					<input 
+						type="radio" 
+						dataField="saveAs"
+						value="zip"
+						name="optradio"
+						checked  > 
+				<%= App.localeData.SaveSelectedAs_Zip %>
+				</label>
+			</div>
+			<div class="frmRadio">
+				<label>
+					<input 
+						type="radio" 
+						dataField="saveAs"
+						value="pdf"
+						name="optradio"> 
+				<%= App.localeData.SaveSelectedAs_Pdf %>		
+				</label>
+			</div>
+		</div>					
+	</form>
+</div>
+]]>    
+</Dialog>
+<Dialog id="SelectEmailSendingType">
+<![CDATA[
+<div id="volumeFormStdContainer">
+	<form id="SelectEmailSendingType" class="form-horizontal" style="padding: 10px; margin-bottom: 10px;max-height: 70vh;"  >
+		<div class="form-group"> 
+			<div class="frmRadio">
+				<label>
+					<input 
+						type="radio" 
+						dataField="sendingType"
+						class="bindable"
+						value="simple"
+						name="optradio"
+						checked  > 
+				<%= App.localeData.email_Type_Simple %>
+				</label>
+			</div>
+			<div class="frmRadio">
+				<label>
+					<input 
+						type="radio" 
+						dataField="sendingType"
+						class="bindable"
+						value="massive"
+						name="optradio"> 
+				<%= App.localeData.email_Type_Massive %>		
+				</label>
+			</div>
+			<div class="frmRadio">
+				<label>
+					<input 
+						type="radio" 
+						dataField="sendingType"
+						class="bindable"
+						value="pec"
+						<%= ((Appc.getCurrVolConfigParam("isPecVolume"))?"":"disabled") %>
+						name="optradio"> 
+				<%= App.localeData.email_Type_PEC %>		
+				</label>
+			</div>
+		</div>					
+	</form>
+</div>
+]]>    
+</Dialog>
+<Dialog id="MassiveSending">
+<![CDATA[
+<div id="volumeFormStdContainer" >	
+	<form id="SaveSelectedForm" class="form-horizontal" 
+	style="padding: 10px; margin-bottom: 10px;max-height: 70vh;"  >
+	
+		<div class="form-group ">
+		  <label class="col-xs-offset-1 col-xs-7" >
+			  <%= App.localeData.includeAttachments %>
+			  <input type="checkbox"
+			      style="margin-left: 10px;"  
+				  name="checkboxes" 
+				  class="bindable saveWithoutValidation" 
+				  dataField="includeAttachments"  
+				  >
+		  </label>
+		  <div class="col-xs-2">
+		  </div>
+		</div>
+							
+		<div class="form-group"> 
+			<label class="col-xs-offset-1 col-xs-2">
+				<%= "*"+App.localeData.email_To %>
+			</label>
+				<%= AppHelper_compileSelectPicker(
+					{
+						dataField:"to",
+						validate:"notEmpty",
+						captionsArray:Appc.getFldListOfCurrVol(true),
+						captionDataMember:"caption",
+						valuesArray:Appc.getFldListOfCurrVol(true),
+						valueDataMember:"name"
+					})
+				%>
+		</div>	
+		<div class="form-group"> 
+			<label class="col-xs-offset-1 col-xs-2 ">
+				<%= App.localeData.email_Cc %>
+			</label>
+				<%= AppHelper_compileSelectPicker(
+					{
+						dataField:"cc",
+						captionsArray:Appc.getFldListOfCurrVol(true),
+						captionDataMember:"caption",
+						valuesArray:Appc.getFldListOfCurrVol(true),
+						valueDataMember:"name"
+					})
+				%>
+		</div>	
+		<div class="form-group"> 
+			<label class="col-xs-offset-1  col-xs-2">
+				<%= App.localeData.email_Bcc %>
+			</label>
+				<%= AppHelper_compileSelectPicker(
+					{
+						dataField:"bcc",
+						captionsArray:Appc.getFldListOfCurrVol(true),
+						captionDataMember:"caption",
+						valuesArray:Appc.getFldListOfCurrVol(true),
+						valueDataMember:"name"
+					})
+				%>
+		</div>	
+		<div class="form-group"> 
+			<label class="col-xs-offset-1  col-xs-2">
+				<%= App.localeData.title %>
+			</label>
+				<%= AppHelper_compileSelectPicker(
+					{
+						dataField:"title",
+						captionsArray:Appc.getFldListOfCurrVol(true),
+						captionDataMember:"caption",
+						valuesArray:Appc.getFldListOfCurrVol(true),
+						valueDataMember:"name"
+					})
+				%>
+		</div>	
+		<div class="form-group"> 
+			<label class="col-xs-offset-1  col-xs-12">
+				<%= App.localeData.email_MessageBody %>
+			</label>
+			<div class="col-xs-offset-3">
+				<%= AppHelper_compileSelectPicker(
+					{
+						dataField:"messageBody",
+						captionsArray:Appc.getFldListOfCurrVol(true),
+						captionDataMember:"caption",
+						valuesArray:Appc.getFldListOfCurrVol(true),
+						valueDataMember:"name"
+					})
+				%>
+			</div>
+		</div>	
+	</form>
+</div>	
+]]>    
+</Dialog>
+<Dialog id="PecSending">
+<![CDATA[
+<div id="volumeFormStdContainer">	
+	<form class="form-horizontal" 
+	style="padding: 10px; margin-bottom: 10px;max-height: 70vh;"  >
+
+	  	<div class="form-group ">
+	  	  <label class="col-xs-12 frmGroupOfControlsTitle" ><%= App.localeData.massiveSnd_composeSubjectAndBody %>
+			  <input type="checkbox"
+			      style="margin-left: 10px;"  
+				  name="checkboxes" 
+				  class="bindable" 
+				  dataField="useMacro"  
+				  >
+	  	  </label>		
+		</div>
+		<div class="form-group compose">
+			<label class="col-xs-offset-1 col-xs-4 frmIt_mTop " >
+			  <%= App.localeData.email_Subject %>
+				<%= AppHelper_compileSelectPicker(
+						{
+							dataField:"subjectMacro",
+							datawidth:"20px",
+							captionsArray:Appc.getFldListOfCurrVol(false),
+							captionDataMember:"caption",
+							valuesArray:Appc.getFldListOfCurrVol(false),
+							valueDataMember:"name",
+							multiple:true,
+							notBindable:true
+						})
+					%>
+			</label>
+			<div class="col-xs-offset-1 col-xs-11">
+			  <input  type="text"  
+					  dataField = "subjectMacro"
+					  class="form-control input-md bindable" 
+					  value=""
+					  >
+			  </input>
+			</div>
+		</div>				
+		<div class="form-group compose" >
+			<label class="col-xs-offset-1 col-xs-10 frmIt_mTop" >
+			  <%= App.localeData.email_MessageBody %>
+				<%= AppHelper_compileSelectPicker(
+						{
+							dataField:"bodyMacro",
+							datawidth:"20px",
+							captionsArray:Appc.getFldListOfCurrVol(false),
+							captionDataMember:"caption",
+							valuesArray:Appc.getFldListOfCurrVol(false),
+							valueDataMember:"name",
+							multiple:true,
+							notBindable:true
+						})
+					%>	
+			</label>
+			<div class="col-xs-offset-1 col-xs-11">
+				  <textarea  type="text"  
+						  dataField = "bodyMacro"
+						  class="form-control input-md bindable" 
+						  placeholder=""
+						  value=""
+						  >
+				  </textarea>
+			</div>
+		</div>				
+	
+		<div class="form-group ">
+	  	  <label class="col-xs-12 frmGroupOfControlsTitle" ><%= App.localeData.email_SelObjects %></label>	
+		  <label class="col-xs-offset-1 frmCtrl11_4" >
+			  <%= App.localeData.email_SelObjects_mainDoc %>
+			  <input type="checkbox"
+			      style="margin-left: 10px;"  
+				  name="checkboxes" 
+				  class="bindable" 
+				  dataField="includeMainDoc"  
+				  >
+		  </label>
+		  <label class="col-xs-offset-1 frmCtrl11_4" >
+			  <%= App.localeData.email_SelObjects_attachments %>
+			  <input type="checkbox"
+			      style="margin-left: 10px;"  
+				  name="checkboxes" 
+				  class="bindable" 
+				  dataField="includeAttachments"  
+				  >
+		  </label>
+		</div>
+	</form>
+</div>	
+]]>    
+</Dialog>
+<Dialog id="SelectHistoryType">
+<![CDATA[
+<div id="volumeFormStdContainer">
+	<form id="SelectHistoryType" class="form-horizontal" style="padding: 10px; margin-bottom: 10px;max-height: 70vh;"  >
+		<div class="form-group" style="margin-top:10vh">
+			<button type="button" histType="PEC" class="btn btn-default col-xs-offset-2" >
+				<%= App.localeData.sendingHistoryPEC %>
+			</button>
+			<button type="button" histType="FPA" class="btn btn-default" >
+				<%= App.localeData.sendingHistoryFPA %>
+			</button>
+		</div>				
+	</form>
+</div>
+]]>    
+</Dialog>
+<Dialog id="SendingHistory">
+<![CDATA[
+<div id="volumeFormStdContainer">	
+	<form class="form-horizontal" 
+	style="padding: 10px; margin-bottom: 10px;max-height: 70vh;"  >
+		<div id="historyTree" style="width:900px"></div>	
+	</form>
+</div>	
+]]>    
+</Dialog>
+</Dialogs>
+
+
+
+
+
+
+
+

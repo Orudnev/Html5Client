@@ -1,0 +1,213 @@
+<div id="EmailSendDlgContainer">
+	<div id="page1" class="panel panel-primary active">
+		<div class="panel-heading">
+			<div id="wizardTitle" >
+				<span class="glyphicon glyphicon-pencil" >
+				</span > 
+				<%= App.localeData.email_wzrdPage1_Title %>
+				<div id="wizardPageSwitcher">
+					<span id="currPage" class="wizardPageIndicator" >1</span>
+					<span  class="wizardPageIndicator" > / 3</span>					
+					<button type="button" 
+						command="right" 			
+						class="toolbarBtn btn btn-default menuBtn glyphicon glyphicon-chevron-right">			
+					</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+                  <label class="frmCtrl12_2 control-label" ><%= App.localeData.email_To %>:</label>  
+                  <div class="frmCtrl12_10">
+                      <input  type="text"  
+                              dataField = "emailTo"
+                              class="form-control input-md bindable" 
+                              placeholder="<%= App.localeData.email_placeHolder %>"
+                              >
+					  </input>
+                  </div>
+                </div>			
+				<div class="form-group">
+                  <label class="frmCtrl12_2 control-label" ><%= App.localeData.email_Cc %>:</label>  
+                  <div class="frmCtrl12_10">
+                      <input  type="text"  
+                              dataField = "emailCc"
+                              class="form-control input-md bindable" 
+                              placeholder="<%= App.localeData.email_placeHolder %>"
+                              value=""
+                              >
+					  </input>
+                  </div>
+                </div>			
+				<div class="form-group">
+                  <label class="frmCtrl12_2 control-label" ><%= App.localeData.email_Bcc %>:</label>  
+                  <div class="frmCtrl12_10">
+                      <input  type="text"  
+                              dataField = "emailBcc"
+                              class="form-control input-md bindable" 
+                              placeholder="<%= App.localeData.email_placeHolder %>"
+                              value=""
+                              >
+					  </input>
+                  </div>
+                </div>			
+				<div class="form-group">
+                  <label class="frmCtrl12_2 control-label" ><%= App.localeData.email_Subject %>:</label>  
+                  <div class="frmCtrl12_10">
+                      <input  type="text"  
+                              dataField = "subject"
+                              class="form-control input-md bindable" 
+                              value=""
+                              >
+					  </input>
+                  </div>
+                </div>			                
+				<div id="wizardPageMessageBody" class="form-group">
+                  <label class="col-xs-12 control-label" ><%= App.localeData.email_MessageBody %>:</label>  
+                  <div class="col-xs-12">
+                      <textarea  type="text"  
+                              dataField = "messageBody"
+                              class="form-control input-md bindable" 
+                              placeholder=""
+                              value=""
+                              >
+					  </textarea>
+                              
+                  </div>
+                </div>
+			</form>
+		</div> <!--panel-body -->
+	</div> <!--Panel -->
+	<div id="page2" class="panel panel-primary nullHeightEx">
+		<div class="panel-heading">
+			<div id="wizardTitle" >
+				<span class="glyphicon glyphicon-upload" >
+				</span > 
+				<%= App.localeData.email_wzrdPage2_Title %>
+				<div id="wizardPageSwitcher">
+					<button type="button" 
+						command="left" 			
+						class="toolbarBtn btn btn-default menuBtn glyphicon glyphicon-chevron-left">
+					</button>
+					<span id="currPage" class="wizardPageIndicator" >2/3</span>
+					<button type="button" 
+						command="right" 			
+						class="toolbarBtn btn btn-default menuBtn glyphicon glyphicon-chevron-right">			
+					</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel-body"> 
+			<form class="form-horizontal">
+			
+				<div class="form-group"> <!-- section "Attachment mode"-->
+					<label class="col-xs-12 wzrdGroupOfControlsTitle" ><%= App.localeData.email_attMode %></label>  
+					<div class="frmRadio">
+						<label>
+							<input 
+								type="radio" 
+								dataField="attMode"
+								class="bindable"
+								value="zip"
+								name="optradio"> 
+							<%= App.localeData.email_attMode_zip %>
+						</label>
+					</div>
+					<div class="frmRadio">
+						<label>
+							<input 
+								type="radio" 
+								dataField="attMode"
+								class="bindable"
+								value="sep"
+								name="optradio"> 
+							<%= App.localeData.email_attMode_sepFiles %>
+						</label>
+					</div>
+                </div>				<!-- section "Attachment mode"-->	
+				<div class="form-group"> <!-- section "Select the objects to send"-->
+					<label class="col-xs-12 wzrdGroupOfControlsTitle" ><%= App.localeData.email_SelObjects %></label>  
+					<div id="selObjects_multipleDocs">
+						<div class="frmRadio">
+						  <label>
+						  <input type="checkbox" 
+							  class="bindable " 
+							  dataField="mainDocSelected"  
+							  >
+							  <%= App.localeData.email_SelObjects_mainDoc %>	    
+						  </label>
+						</div>
+						<div class="frmRadio">
+						  <label>
+						  <input type="checkbox" 
+							  class="bindable " 
+							  dataField="includeAllAttachments"  
+							  >
+							  <%= App.localeData.email_SelObjects_attachments %>	    
+						  </label>
+						</div>
+					</div>
+					<div class="col-xs-offset-1 " id="selObjects_singleDoc">
+						<div >
+						  <label>
+						  <input type="checkbox" 
+							  class="bindable " 
+							  dataField="mainDocSelected"  
+							  >
+							  <%= App.localeData.email_SelObjects_mainDoc %>	    
+						  </label>
+						</div>
+						<label class="col-xs-12 " style="padding-left:0px;" >
+						<%= App.localeData.email_SelObjects_attachments %></label>  
+						<select id="selectAttachments" class="selectpicker col-xs-10"
+						multiple data-actions-box="true" data-size="5">
+						</select>
+					</div>
+                </div>	<!-- section "Select the objects to send"-->
+				<div class="form-group"> <!-- section "Define names generation rule"-->
+					<label class="col-xs-12 wzrdGroupOfControlsTitle" >
+						<%= App.localeData.email_NameGenerationRule %>
+					</label>  
+					<select id="selectVolFields" 
+						class="selectpicker col-xs-1 cmbSelVolfields" multiple data-size="5" >
+					</select>
+					<div class="col-xs-10">
+						<input type="text"  
+							  dataField = "nameGenRule"
+							  class="form-control input-md bindable" 
+							  value=""
+							  >
+						</input>
+					</div>
+                </div>                
+			</form>
+		</div> <!--panel-body -->
+	</div> <!--Panel -->
+	<div id="page3" class="panel panel-primary nullHeightEx">
+		<div class="panel-heading">
+			<div id="wizardTitle" >
+				<span class="glyphicon glyphicon-hand-down" >
+				</span > 
+				<%= App.localeData.email_wzrdPage3_Title %>
+				<div id="wizardPageSwitcher">
+					<button type="button" 
+						command="left" 			
+						class="toolbarBtn btn btn-default menuBtn glyphicon glyphicon-chevron-left">
+					</button>
+					<span id="currPage" class="wizardPageIndicator" >3/3</span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel-body"> 
+			<div id="page3Error" class="page3Result msgError nullHeightEx">
+			</div>		
+			<div id="page3OkResult" class="page3Result msgSuccess nullHeightEx">
+				<%= App.localeData.email_okResult %>
+			</div>		
+		</div> <!--panel-body -->
+	</div> <!--Panel -->
+</div> <!--EmailSendDlgContainer -->

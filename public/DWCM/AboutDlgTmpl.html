@@ -1,0 +1,14 @@
+<div id="About">
+	<div>
+		Client version: <%= App.version %>
+	</div>
+	<div>
+		Server version: <%= App.serverVersion %>
+	</div>
+	<div>
+		Device: <%= AppHelper_IsMobileOrTablet()?"Mobile":"PC" %>
+	</div>
+	<div>
+		UserAgent: <%= navigator.userAgent %>
+	</div>
+</div> <!--About -->

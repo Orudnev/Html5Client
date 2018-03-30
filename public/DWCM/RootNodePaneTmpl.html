@@ -1,0 +1,55 @@
+<style>
+    
+</style>
+<div id="rootNodePane">
+<div class="navButtonsPane">
+<div class="itemCell" tvrowid="0">
+    <div class="graphIcon ddTreeRootIcons cmdbutton" dwcmCommand="GoToDF">
+        <img height="100%" src="<%= Appn.Icons.DDtreeIcon.storageIcon %>">
+    </div>
+    <div class="itemText"><%= App.localeData.ddtree_DF %></div>
+</div>
+<div class="itemCell" tvrowid="0">
+    <div class="graphIcon ddTreeRootIcons cmdbutton" dwcmCommand="GoToWF">
+        <img height="100%" src="<%= Appn.Icons.DDtreeIcon.wfIcon %>">
+    </div>
+    <div class="itemText"><%= App.localeData.ddtree_WF %></div>
+</div>
+<div class="itemCell" tvrowid="0">
+    <div class="graphIcon ddTreeRootIcons cmdbutton" dwcmCommand="GoToQST">
+        <img height="100%" src="<%= Appn.Icons.DDtreeIcon.qwestIcon %>">
+    </div>
+    <div class="itemText"><%= App.localeData.ddtree_QST %></div>
+</div>
+</div>
+
+<div class="infoPaneContainer">
+ <div class="infoPane">
+    <div class="infoBigCaption">
+        Data Dictionary: 
+        <span class="label bgcolorWhite"><%= App.Models.settings.get(Appn.Model.Settings.dsn) %></span>
+    </div>
+    <table class="table infoTable">
+        <tbody>
+            <tr class="infoCaption">
+                <th>Creation date: </th>
+                <td><span class="label bgcolorWhite">n/a</span></td>
+            </tr>
+            <tr class="infoCaption">
+                <th>Database type: </th>
+                <td><span class="label bgcolorWhite">n/a</span></td>
+            </tr>
+            <tr class="infoCaption">
+                <th>Database server:  </th>
+                <td><span class="label bgcolorWhite">n/a</span></td>
+            </tr>
+            <tr class="infoCaption">
+                <th>Volume registered: </th>
+                <td><span class="label bgcolorWhite"><%= Appc.getVolumeCount()  %></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div> 
+</div>
+
+</div>

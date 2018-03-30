@@ -1,0 +1,241 @@
+<div>
+  <style>
+     /*Size "B" Big, "M" Middle "S" Small */ 
+     /*CA - client area  */
+     /*hideLTM - hide if <= middle*/  
+      
+       .mpMainPane{
+           top: 56px;
+           left: 0.5vw;
+           right: 0.5vw;
+           bottom: 0.5vh;
+           overflow: auto;
+       }
+
+      
+      
+       .mpall{
+           position: absolute;
+           top: 0px;
+           bottom: 0px;
+           left: 0px;
+           right: 0px;
+           min-width: 300px;
+           min-height: 300px;
+           background-color: rgb(240,240,240);
+           overflow: auto;
+       }
+    
+       .mpPanes{
+           position: absolute;
+           border-style: solid;
+           border-radius: 10px;
+           border-color: #19438C; /*Comped blue color*/
+           border-width: 0px;
+       }
+      
+      #mpToolbar{
+           top: 0.5vh;
+           left: 0.5vw;
+           right: 0.5vw;
+           height: 46px;
+      }
+    
+       #mpLeftPane{
+           top: 56px;
+           left: 0.5vw;
+           right: 0.5vw;
+           bottom: 0.5vh;
+           width: calc(19%);
+       }
+      
+
+       .itemCont{
+           height: 3vh;
+           padding-top: calc(0.5vh);
+        }
+        .DirImage
+        {
+            display: inline-block
+            width: 32px;
+            height: 32px;
+        }
+      
+          
+      
+        /*Datagrid Header*/  
+        .fixed-table-header
+        {
+            background-color: #b2b2b2; 
+            color: black;
+        }
+        /*Datagrid hover row */  
+        .table-hover tbody tr:hover > td 
+        {
+            background-color: #c3d2ed;
+        }  
+        /*Datagrid selected row */  
+        .table-striped>tbody>tr.selectedRow
+        {
+            background-color: #b0bed9;
+        }
+
+        /* B i g  I c o n s */  
+        /* Big Icons (root nodes DF,WF and QST) */  
+        div.graphIcon.ddTreeRootIcons
+        {
+            height:16vh;
+        }
+        /* Labels for Big Icons (root nodes DF,WF and QST) */ 
+        span.nodeCaption.ddTreeRootIcons
+        {
+            display: block;
+            padding-left: 3vw;
+            font-size: 3vh;
+            font-weight: bold;
+        }
+      
+        /* M i d d l e  I c o n s */  
+        /* Middle icons (All Areas, All Volumes)*/
+        div.graphIcon.ddTreeMiddleIcons
+        {
+            height:7vh;
+        }
+      
+        /* Panes */ 
+
+          
+        /* Labels for Middle Icons (All Areas, All Volumes) */ 
+        span.nodeCaption.ddTreeMiddleIcons
+        {
+            display: block;
+            padding-left: 3vw;
+            font-size: 2vh;
+            font-weight: bold;
+        }
+
+      
+        /* S m a l l  I c o n s */  
+        /* Small icons (areas, volumes) */
+        div.graphIcon.ddTreeSmallIcons {
+            height: 4vh;
+            margin-right: 5px;
+        }      
+        /* Labels for small Icons (areas, volumes) */ 
+        span.nodeCaption.ddTreeMiddleIcons
+        {
+        }      
+      
+        span.areaIconR  /*Root folder */
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/folderR_grey.svg);
+        }  
+        span.areaIconT  /*Terminate area (doesn't contain nested areas) */
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/folderT_green.svg);
+        }  
+        span.areaIconC  /*Area containing  nested areas */
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/folderC_red.svg);
+        }  
+        span.areaIconRT  /*Terminate Root Area */
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/folderRT_green.svg);
+        }  
+        span.areaIconRC  /*Root Area containing  nested areas */
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/folderRC_red.svg);
+        }  
+        span.allVolumes  /*Root Area containing  nested areas */
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/Volume_grey.svg);
+        }  
+        span.standardDirIcon
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/volume_yellow.svg);
+        }
+        span.virtualDirIcon
+        {
+            vertical-align: middle;
+            content:url(DWCM/image/DirIcons/volume_blue.svg);
+        }
+        
+        .bgcolorWhite
+        {
+            background-color: white;
+            color: #19438C; /*Comped blue color*/
+            font-weight: bold;
+        }
+
+      
+        /* Navigation grid, flat mode */
+        .ddtTblInfoBackground
+        {
+            background-color: #70c4e3; 
+        }
+      
+        .ddtTblInfoHead
+        {
+            font-size: calc(1.5vh + 10px);
+            font-weight: bold;
+            text-align: center;
+        }
+        .ddtTblInfoCaption
+        {
+            font-weight: bold;
+            padding-left: 10px;
+        }
+        .ddtTblInfoLabel
+        {
+        }
+        
+        
+    
+</style>
+
+<div id="mpall" class="mpall">
+    <div id="mpToolbar" class="mpPanes" > 
+        <div id="pathBarContainer" ></div>
+        <div id="appToolbar">
+			<div class="btn-group">
+			  <button id="mainMenuBtn" type="button" class="btn btn-primary dropdown-toggle glyphicon glyphicon-align-justify" style="margin-top:3px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  </button>
+			  <ul id="mainMenuItems" class="dropdown-menu pull-right">
+			  </ul>
+			</div>            
+            <!--
+            <button id="btnAppSettings"  
+                    class="btn btn-primary glyphicon glyphicon-cog cmdbutton" 
+                    dwcmCommand="AppSettings" 
+                    data-toggle="tooltip" 
+                    title="General settings" >
+            </button>            
+            <button id="btnLogout"  
+                    class="btn btn-primary glyphicon glyphicon-log-out cmdbutton" 
+                    dwcmCommand="Logout" 
+                    data-toggle="tooltip" 
+                    title="Disconnect" >
+            </button>
+            -->
+        </div>        
+                
+                                
+    </div>
+    <div id="mpMainPane" class="mpPanes mpMainPane" > 
+        
+    </div>    
+    <div id="" class="mpPanes mpStatusPaneB mpStatusPaneM" > 
+        
+    </div>
+</div> <!-- mpall-->
+</div> <!-- Root MasterPage div-->
+<div id="dialogContLvl1" ></div>
+<div id="NavigatorContainer"></div>
+
