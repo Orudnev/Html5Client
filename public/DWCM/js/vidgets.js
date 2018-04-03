@@ -153,11 +153,13 @@
         var delimiterWidth = 0;
         // 1. build path 
         $.each(itemList, function addItem(id, item) {
+			if (item.id != "DD" && item.id != "DF") {
             var delimiter = $(that.template.delimiter);
             that.$wrapper.append(delimiter);
             if (delimiterWidth == 0) delimiterWidth = delimiter.outerWidth(true);
             var newItem = $(that.template.folderTmpl).text(item.text).attr('itemIndex',id);
             that.$wrapper.append(newItem);
+			}
         });
         //2. check the summary path width
         var pathItemList = that.$wrapper.children();
