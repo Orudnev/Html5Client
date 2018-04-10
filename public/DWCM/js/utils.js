@@ -404,9 +404,14 @@ function AppHelper_getStaticResource(relativeUrl,handler)
         _relativeUrl: relativeUrl,
         _handler: handler
     };
+	var getStaticResServlet = "GetStaticRes_dwcm?Module=";
+	if (startedFromVSCode){
+		dfmwebprefix = "";
+		getStaticResServlet = "";
+	}
     if (relativeUrl == null) return;
     $.ajax({
-    url: dfmwebprefix+"GetStaticRes_dwcm?Module="+relativeUrl,
+    url: dfmwebprefix+getStaticResServlet+relativeUrl,
     type: "GET",
     contentType: "text/html",
     dataType: "text",  
@@ -839,6 +844,9 @@ modelObject,onAppendHandler,renderMenuHandler,dataToken)
 	$("#mpall").addClass("nullHeight"); //hide panes
 	$("#mpMainPane").addClass("nullHeight"); //hide panes
 	var containerHtml = App.Templates.dialogs[Appn.Dialogs.WholeMainPaneDialog];
+	if(modelObject.titleIcon){
+		modelObject.titleIconHtml = '<span class="glyphicon '+modelObject.titleIcon+'"></span>';
+	}
     containerHtml = compileTemplate(containerHtml,modelObject);
 	$("body").append(containerHtml);
 	if (onAppendHandler) onAppendHandler(dataToken);

@@ -48,6 +48,7 @@ window.Appn =
 	 ViewHistoryItem: "ViewHistoryItem",
 	 ViewHistoryItemAsXml: "ViewHistoryItemAsXml",
 	 AutoFilter:"AutoFilter",
+	 UDFilter:"UDFilter",
 	 DGridAddDocument: "AddDocument",
 	 DGridAddAttachment: "AddAttachment",
 	 DGridDeleteDocument: "DeleteDocument",
@@ -112,6 +113,7 @@ window.Appn =
 		 externalDirIconConserved: "DWCM/image/DirIcons/VolumeStdConserved.svg",
 		 virtualDirIcon: "DWCM/image/DirIcons/VolumeVV.svg",
 		 filterIcon: "DWCM/image/DirIcons/filter.svg",
+		 udFilterIcon: "DWCM/image/DirIcons/filterGreen.svg",
 		 filterAutoIcon:"DWCM/image/DirIcons/filterAuto.svg",
 		 groupingIcon: "DWCM/image/DirIcons/grouping.svg",
 		 searchIcon: "DWCM/image/DirIcons/search.svg",
@@ -135,7 +137,8 @@ window.Appn =
 	AppSettingsDlg:"AppSettingsDlg", 
 	AddAttachmentForm:"AddAttachmentForm",
 	AutoFilterDialog:"AutoFilterDialog",
-	SaveSelectedAs:"SaveSelectedAs" 
+	SaveSelectedAs:"SaveSelectedAs",
+	UDFilterForm:"UDFilterForm" 
  }
 };
 

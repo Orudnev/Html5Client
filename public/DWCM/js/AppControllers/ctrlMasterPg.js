@@ -65,7 +65,7 @@ var instance =
 				 {
 					 App.Controllers.masterPage.doOpenVolume();
 				 }
-				 else if(strCommand == Appn.MenuCommands.VolumeSearch)
+				 else if(strCommand == Appn.MenuCommands.UDFilter)
 				 {
 					 App.Controllers.masterPage.openSearchDialog();
 				 }
@@ -373,7 +373,7 @@ var instance =
 					 });	
 				
 			},
-			doSearch:function(sqlStr,JSONstr)
+			doUdFilter:function(sqlStr,JSONstr)
 			{
 				 require(["modelDfmVolume","viewDfmVolume"],function(VolModel,VolView)
 				 {
@@ -394,16 +394,16 @@ var instance =
 					 srchVol.view = new VolView(); 
 					 srchVol.view.model = srchVol.model;
 					 srchVol.model.set('mainView', srchVol.view);
-					 App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.searchIcon,"");
+					 App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.udFilterIcon,App.localeData.NewFilter);
 					 srchVol.model.open();
 				 });
 			},
-			doOpenVolumeSearch:function(volumeName,searchStr){
+			doOpenUDFilter:function(volumeName,searchStr){
 				require(["modelDfmVolume","viewDfmVolume"],function(VolModel,VolView)
 				{
 					 newSelNode = App.Models.ddTree.findPhysicalVolNodeByName(volumeName);
 					 if (!newSelNode) 
-						 throw "doOpenVolumeSearch: volume "+volumeNmae+" is not found";
+						 throw "doOpenUDFilter: volume "+volumeNmae+" is not found";
 					 App.Models.ddTree.setSelectedNode(newSelNode);
 					 var srchVol = Appc.getCurrentFilteredVol();
 					 srchVol.model = new VolModel();
@@ -412,7 +412,8 @@ var instance =
 					 srchVol.model.set("searchStr",searchStr);
 					 srchVol.view = new VolView(); 
 					 srchVol.view.model = srchVol.model;
-					 srchVol.model.set('mainView', srchVol.view);					 App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.searchIcon,"");
+					 srchVol.model.set('mainView', srchVol.view);					 
+					 App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.udFilterIcon,"");
 					 srchVol.model.open();
 				});
 			},
@@ -447,7 +448,7 @@ var instance =
 					wmw_getMSD(App.getSessionId(),volumeId,"","",null,
 					function (bresult,dataObj,token)
 					{
-						App.Views.masterPage.renderSearchForm(dataObj.oMSD);
+						App.Views.masterPage.renderUDFilterForm(dataObj.oMSD);
 					});		
 				});
 			},

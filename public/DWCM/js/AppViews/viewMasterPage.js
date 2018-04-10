@@ -252,10 +252,10 @@ var instance =
 		if ( vinfo){
 			mainMenuHtml.push(stringFormat(
 			'<li><a href="#" dwcmCommand="'
-			+Appn.MenuCommands.VolumeSearch
+			+Appn.MenuCommands.UDFilter
 			+'">'
-			+'<span class="glyphicon glyphicon-search" style="padding-right: 5px;"></span>{0}</a></li>',
-			[App.localeData.dgrid_menuCmd_Search]));
+			+'<span class="glyphicon glyphicon-filter" style="padding-right: 5px;"></span>{0}</a></li>',
+			[App.localeData.dgrid_menuCmd_Filter]));
 
 			mainMenuHtml.push(stringFormat(
 			'<li><a href="#" dwcmCommand="'
@@ -564,12 +564,12 @@ var instance =
 	$('#DF_VolTabContainer a[data-toggle="tab"]').off('show.bs.tab').on('show.bs.tab', 
 					App.Controllers.masterPage.onToolbarButtonClick); 
 	},
-	renderSearchForm:function(msd)
+	renderUDFilterForm:function(msd)
 	{
-		var formHtml = App.Templates.dialogs[Appn.Dialogs.SearchForm];
+		var formHtml = App.Templates.dialogs[Appn.Dialogs.UDFilterForm];
 		formHtml = compileTemplate(formHtml,null);
 		var $formHtml = $(formHtml)
-		var model = {title: App.localeData.dgrid_menuCmd_Search,strHtmlContent:$formHtml[0].outerHTML};
+		var model = {title: App.localeData.NewFilter,strHtmlContent:$formHtml[0].outerHTML,titleIcon:'glyphicon-filter'};
 		
 		AppHelper_ShowWholeMainPaneDialog(model,
 			  function(token)
@@ -610,7 +610,7 @@ var instance =
 						var strJSON = JSON.stringify(exprList);	
 					
 						AppHelper_RemoveWholeMainPaneDialog();
-						App.Controllers.masterPage.doSearch(strSql,strJSON);
+						App.Controllers.masterPage.doUdFilter(strSql,strJSON);
 					}
 			    );
 			  },null,{that:this,msd:msd});

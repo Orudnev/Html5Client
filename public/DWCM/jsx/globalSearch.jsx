@@ -255,7 +255,6 @@ var instance = function(){
       handleOnSelIndexChange:function(newSelectedIndex)
       {
           this.setState({selectedIndex: newSelectedIndex});
-		  //App.Controllers.masterPage.doOpenVolumeSearch("bbbb","DWC");
       },
 	  handleToolbarBtnClick:function(strCommand)
 	  {
@@ -271,7 +270,7 @@ var instance = function(){
 		  if (strCommand=='ok'){
 			 App.Models.commonParams.set('globalSearchLastResult',this.state.rows);
 			 this.dlgRemove(); 
-			 App.Controllers.masterPage.doOpenVolumeSearch(
+			 App.Controllers.masterPage.doOpenUDFilter(
 				 this.state.rows[this.state.selectedIndex].volumeName,
 				 this.state.searchStr);
 		  }
