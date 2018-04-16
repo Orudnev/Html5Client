@@ -955,6 +955,13 @@
 
 })(jQuery, window, document);	
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 /* dwcmDialog*/
 (function ($, window, document, undefined) {
 	var pluginName = 'dwcmDialog';
@@ -967,6 +974,7 @@
 		buttonsDisabled:{btnOk:false,btnCancel:false,btnMenu:false},
 		contentHtml:"",
 		model:null,
+		doNotRemoveNullHeight:false,
         // Event handlers
 		onMenuBtnClicked: undefined,
 		onMenuItemClicked: undefined,
@@ -1259,9 +1267,11 @@
     ThePlugin.prototype.remove = function () {
 		this.destroy();
 		$.removeData(this, pluginName);
-		$('#' + this.styleId).remove();
-		$("#mpall").removeClass("nullHeight");
-		$("#mpMainPane").removeClass("nullHeight"); 
+		$('#' + this.styleId).remove();	
+		if (!this.options.doNotRemoveNullHeight){
+			$("#mpall").removeClass("nullHeight");
+			$("#mpMainPane").removeClass("nullHeight");
+		} 
 	};
 
     

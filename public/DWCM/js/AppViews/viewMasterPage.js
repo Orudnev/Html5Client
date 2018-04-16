@@ -480,26 +480,34 @@ var instance =
 				  "</div>"+    
 				  "<div class='itemText'></div>"+
 				"</div>";
+
 			for(var i=0;i<itemList.length;i++)
 			{
 				var item = itemList[i];
+				var imgsrcCurr = imgsrc;
 				var $itemTmpl = $(itemTmpl);
 				$itemTmpl.attr('itemId',item.id);
 				if (imgsrc.indexOf("filter")>-1)
 					$itemTmpl.attr('type',"filter");
+				if (item.allowEdit){
+					imgsrcCurr = Appn.Icons.DDtreeIcon.udFilterIcon;
+					$itemTmpl.attr('type',"udfilter");
+				}
+	
 				if (imgsrc.indexOf("grouping")>-1)
 					$itemTmpl.attr('type',"grouping");
-				$itemTmpl.find('img').attr('src',imgsrc);
+				$itemTmpl.find('img').attr('src',imgsrcCurr);
 				$itemTmpl.find('.itemText').text(item.name);
 				$placeHolder.append($itemTmpl);
-			}  
+			}
 		}
 		var $placeHolder;
 		if (mode=="Filters")
 		{
 			$placeHolder = $("#accrdFilters .VolSumTabObjCont");
-			if (selNode.filters && selNode.filters.length>0)
+			if (selNode.filters && selNode.filters.length>0){ 
 				renderFltGroup($placeHolder,selNode.filters,Appn.Icons.DDtreeIcon.filterIcon);
+			}
 		}
 		if (mode=="Groupings")
 		{
@@ -522,6 +530,9 @@ var instance =
 							App.Controllers.masterPage.doOpenFilter(dataToken);
 						}
 													 );
+				}
+				if ($(e.currentTarget).parent().attr("type")=="udfilter"){
+					App.Controllers.masterPage.applyUdFilter(itemId);	
 				}
 				if ($(e.currentTarget).parent().attr("type")=="grouping")
 				{
@@ -564,12 +575,16 @@ var instance =
 	$('#DF_VolTabContainer a[data-toggle="tab"]').off('show.bs.tab').on('show.bs.tab', 
 					App.Controllers.masterPage.onToolbarButtonClick); 
 	},
-	renderUDFilterForm:function(msd)
+	renderUDFilterForm:function(msd,filterCaption)
 	{
 		var formHtml = App.Templates.dialogs[Appn.Dialogs.UDFilterForm];
 		formHtml = compileTemplate(formHtml,null);
 		var $formHtml = $(formHtml)
-		var model = {title: App.localeData.NewFilter,strHtmlContent:$formHtml[0].outerHTML,titleIcon:'glyphicon-filter'};
+		if (!filterCaption) filterCaption = App.localeData.NewFilter;
+		var model = {	title: filterCaption,
+						allowTitleEdit:true,
+						strHtmlContent:$formHtml[0].outerHTML,
+						titleIcon:'glyphicon-filter'};
 		
 		AppHelper_ShowWholeMainPaneDialog(model,
 			  function(token)
@@ -578,7 +593,12 @@ var instance =
 			    var exprLst = []; 
 				try
 				{
-					exprLst = JSON.parse(volSettings.settings.SearchExpression);
+					 var udFilters  = volSettings.settings.udFilters;
+					 if(token.filterCaption){
+						var result = udFilters.find(function(item){return item.caption==token.filterCaption});
+						if (result)
+							exprLst = result.exprList;
+					 }
 				}
 				catch(err)
 				{}
@@ -597,6 +617,10 @@ var instance =
 					'<button type="button" style="margin-top:3px;margin-bottom:3px; margin-right:3px;"'+
 					'command="ok"'+
 					'class="toolbarBtn btn btn-success menuBtn pull-right glyphicon glyphicon-ok">'+
+					'</button>'+
+					'<button type="button" style="margin-top:3px;margin-bottom:3px; margin-right:3px;"'+
+					'command="save"'+
+					'class="toolbarBtn btn btn-primary menuBtn pull-right glyphicon glyphicon-floppy-disk">'+
 					'</button>';
 			
 				$(".WholeMainPaneDialog .toolbarDiv").append(btnOkHtml);
@@ -607,13 +631,23 @@ var instance =
 						$("#searchFormContainer .btnSubmit").off('click');
 						var exprList = $("#exprEditor").expressionEditor("getExprList");
 					    var strSql = AppHelper_BuildFilterExpression(exprList,event.data.msd.jFields);
-						var strJSON = JSON.stringify(exprList);	
-					
+						var filterCaption = $('.WholeMainPaneDialog.lvl0 h3 input').val();
+
 						AppHelper_RemoveWholeMainPaneDialog();
-						App.Controllers.masterPage.doUdFilter(strSql,strJSON);
+						App.Controllers.masterPage.doFilter(strSql,filterCaption);
 					}
 			    );
-			  },null,{that:this,msd:msd});
+				$(".WholeMainPaneDialog .toolbarBtn[command='save']").on('click', token,
+					function(event)
+					{
+						var token = event.data;
+						var filterCaption = $('.WholeMainPaneDialog.lvl0 h3 input').val();
+						if (!filterCaption) filterCaption = App.localeData.NewFilter; 
+						var exprList = $("#exprEditor").expressionEditor("getExprList");
+						App.Controllers.masterPage.saveFilter(filterCaption,exprList);
+					}
+			    );
+			  },null,{that:this,msd:msd,filterCaption:filterCaption});
 	},
 	getBtnDDTreeAsTblOrderAttrs:function()
 	{

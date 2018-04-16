@@ -847,6 +847,7 @@ modelObject,onAppendHandler,renderMenuHandler,dataToken)
 	if(modelObject.titleIcon){
 		modelObject.titleIconHtml = '<span class="glyphicon '+modelObject.titleIcon+'"></span>';
 	}
+	modelObject.readonly = !modelObject.allowTitleEdit?"readonly":"";
     containerHtml = compileTemplate(containerHtml,modelObject);
 	$("body").append(containerHtml);
 	if (onAppendHandler) onAppendHandler(dataToken);
@@ -896,6 +897,7 @@ function AppHelper_VolumeSettingsClass(volumeName)
     var data = localStorage.getItem(this.getResName());
 	this.settings = {
 		SearchExpression:"",
+		udFilters:[],
 		nameGenRule:"",
 		massiveSendingMap:
 		{

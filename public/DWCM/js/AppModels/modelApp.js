@@ -336,10 +336,20 @@ window.Appc = {
 	 },
 	 getFldListOfCurrVol: function(insertEmptyToTop)
 	 {
-			var fldList = Appc.getActiveVolumeModelObject().get("msd").jFields.slice();
-		    if (insertEmptyToTop)
-		 			fldList.unshift("");
-		    return fldList;
+		var fldList = Appc.getActiveVolumeModelObject().get("msd").jFields.slice();
+		if (insertEmptyToTop)
+				fldList.unshift("");
+		return fldList;
+	 },
+	 getMsdOfSelectedNode: function(handler){
+		var currVolModel = Appc.getActiveVolumeModelObject(); 
+		var selNode = App.Models.ddTree.getSelectedNode();
+		if(currVolModel && currVolModel.get('volumeName') === selNode.volumeInfo.name){
+			handler(true,currVolModel.get('msd'),this);
+			return;
+		} 
+        wmw_getMSD(App.getSessionId(),selNode.id,null,null,handler,
+		function(bresult,dataObj,handler){handler(bresult,dataObj.oMSD,this)});
 	 },
      getVolumeCount: function()
             {return App.Models.ddTree.getVolumesCount();},

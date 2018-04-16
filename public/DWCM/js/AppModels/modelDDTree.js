@@ -456,6 +456,17 @@ var instance =
             if (bresult)
             {
                 dataToken.filters = result; 
+                //"result" is the list of DFM Filters
+                //add UDFilters to result
+                var volName = dataToken.text;
+                var volSettings = new AppHelper_VolumeSettingsClass(volName); 
+                var udFilters  = volSettings.settings.udFilters;
+                var dfmFltCount = dataToken.filters.length;
+                for(var i=0;i<udFilters.length;i++){
+                    var udFilter = udFilters[i];
+                    var newItem = {id:i.toString(),name:udFilter.caption,allowEdit:true};  
+                    dataToken.filters.push(newItem);
+                }
                 App.Views.masterPage.renderDfVolTabContainer("Filters");
             }
         }

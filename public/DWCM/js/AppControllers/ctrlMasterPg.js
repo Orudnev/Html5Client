@@ -373,7 +373,19 @@ var instance =
 					 });	
 				
 			},
-			doUdFilter:function(sqlStr,JSONstr)
+			applyUdFilter(filterIndex){
+				var selNode = App.Models.ddTree.getSelectedNode();
+				var volumeName = selNode.volumeInfo.name;
+				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
+				var fltObj = volSettings.settings.udFilters[filterIndex];
+				var hndlr = $.proxy(function(bresult,msd)
+				{
+					var strSql = AppHelper_BuildFilterExpression(fltObj.exprList,msd.jFields);
+					App.Controllers.masterPage.doFilter(strSql,fltObj.caption);
+				},this);
+				Appc.getMsdOfSelectedNode(hndlr);
+			},
+			doFilter:function(sqlStr,filterName)
 			{
 				 require(["modelDfmVolume","viewDfmVolume"],function(VolModel,VolView)
 				 {
@@ -383,9 +395,6 @@ var instance =
 					 
 					 var selNode = App.Models.ddTree.getSelectedNode();
 					 var volumeName = selNode.volumeInfo.name;
-	 				 var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
-					 volSettings.settings.SearchExpression = JSONstr;
-					 volSettings.save();
 					 var srchVol = Appc.getCurrentFilteredVol();
 					 srchVol.model = new VolModel();
 					 srchVol.model.set("volId",-1);
@@ -394,9 +403,29 @@ var instance =
 					 srchVol.view = new VolView(); 
 					 srchVol.view.model = srchVol.model;
 					 srchVol.model.set('mainView', srchVol.view);
-					 App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.udFilterIcon,App.localeData.NewFilter);
+					 App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.udFilterIcon,filterName);
 					 srchVol.model.open();
 				 });
+			},
+			saveFilter:function(filterName,exprList){
+				var selNode = App.Models.ddTree.getSelectedNode();
+				var volumeName = selNode.volumeInfo.name;
+				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
+				var isFound = false;
+				var newItem = {caption:filterName,exprList:exprList};
+				for (var i=0;i<volSettings.settings.udFilters.length;i++)
+				{
+					if (volSettings.settings.udFilters[i].caption === filterName)
+					{
+						volSettings.settings.udFilters[i] = newItem;
+						isFound = true;
+						break;
+					}
+				}
+				if (!isFound)
+					volSettings.settings.udFilters.push(newItem);
+
+				volSettings.save();
 			},
 			doOpenUDFilter:function(volumeName,searchStr){
 				require(["modelDfmVolume","viewDfmVolume"],function(VolModel,VolView)
