@@ -92,6 +92,19 @@ var instance =
 							$(window).trigger('resize');    
 						 },200);
 				 }
+				 else if(strCommand == 'CmApply' || strCommand == 'CmEdit' || strCommand == 'CmDelete'){
+					var objtype = $(e.currentTarget).attr('objtype');
+					var itemIndex = $(e.currentTarget).attr('itemindex');
+					if(strCommand == 'CmApply'){
+						App.Controllers.masterPage.applyUdFilter(itemIndex);	
+				 	}
+					if(strCommand == 'CmEdit'){
+						App.Controllers.masterPage.editUdFilter(itemIndex);	
+				 	}
+					if(strCommand == 'CmDelete'){
+						App.Controllers.masterPage.deleteUdFilter(itemIndex);	
+				 	}
+				 }
 			 },
 			 onMenuCommandDdTree:function(invokedOn, selectedMenu)
 			 {
@@ -373,7 +386,7 @@ var instance =
 					 });	
 				
 			},
-			applyUdFilter(filterIndex){
+			applyUdFilter:function (filterIndex){
 				var selNode = App.Models.ddTree.getSelectedNode();
 				var volumeName = selNode.volumeInfo.name;
 				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
@@ -384,6 +397,25 @@ var instance =
 					App.Controllers.masterPage.doFilter(strSql,fltObj.caption);
 				},this);
 				Appc.getMsdOfSelectedNode(hndlr);
+			},
+			editUdFilter:function(filterIndex){
+				var selNode = App.Models.ddTree.getSelectedNode();
+				var volumeName = selNode.volumeInfo.name;
+				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
+				var fltObj = volSettings.settings.udFilters[filterIndex];
+				var hndlr = $.proxy(function(bresult,msd)
+				{
+					App.Views.masterPage.renderUDFilterForm(msd,fltObj.caption);
+				},this);
+				Appc.getMsdOfSelectedNode(hndlr);
+			},
+			deleteUdFilter:function(filterIndex){
+				var selNode = App.Models.ddTree.getSelectedNode();
+				var volumeName = selNode.volumeInfo.name;
+				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
+				volSettings.settings.udFilters.splice(filterIndex,1);
+				volSettings.save();	
+				$('.itemCell[type="udfilter"][itemId="'+0+'"]').remove();			
 			},
 			doFilter:function(sqlStr,filterName)
 			{

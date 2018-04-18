@@ -145,7 +145,7 @@ window.Appn =
 	
 	
 window.App = {
-     version:"1.0.0.58",
+     version:"1.0.0.59",
 	 serverVersion: "",
      Models:{},
      Views:{},
@@ -373,7 +373,7 @@ window.Appc = {
 		var cv = App.Models.commonParams.get(Appn.Model.currentVol);
 		if (cv)
 		{
-			var config = cv.model.get("volConfig");
+			var config = Appc.getActiveVolumeModelObject().get('volConfig');
 			if (config)
 			{
 				if(parName) 

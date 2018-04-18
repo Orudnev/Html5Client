@@ -129,169 +129,199 @@ var instance =
 			}
 		});
 	}, 
-	renderMainMenu: function()
+	renderMainMenu: function(event,cmObjType,cmObjIndex)
 	{
 		var selectedVolumeObj = Appc.getActiveVolumeModelObject();
 
 		var mainMenuHtml = [];
-		if (selectedVolumeObj && selectedVolumeObj.get)
-		{
-			var volumeRights = selectedVolumeObj.get("volumeRights");
-			var currRow = selectedVolumeObj.get('currentRow');
-			var selectedRowsCount = selectedVolumeObj.get("mainView").getSelectedRows().length;
-			var multipleDocsSelected = selectedRowsCount>1;
-			// 1 add volume menu items
-			if (currRow)
+		if (!cmObjType){
+		// regular (not context ) menu begin
+			if (selectedVolumeObj && selectedVolumeObj.get)
 			{
-				// 1.1  add menu items related to a single document
-				if (volumeRights.AddDocRight)
+				var volumeRights = selectedVolumeObj.get("volumeRights");
+				var currRow = selectedVolumeObj.get('currentRow');
+				var selectedRowsCount = selectedVolumeObj.get("mainView").getSelectedRows().length;
+				var multipleDocsSelected = selectedRowsCount>1;
+				// 1 add volume menu items
+				if (currRow)
 				{
-					mainMenuHtml.push(stringFormat(
-					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridAddDocument
-					+'">'
-					+'<span class="glyphicon glyphicon-plus" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_AddDocument]));	
-                    if(!multipleDocsSelected)
+					// 1.1  add menu items related to a single document
+					if (volumeRights.AddDocRight)
 					{
 						mainMenuHtml.push(stringFormat(
 						'<li><a href="#" dwcmVolCommand="'
-						+Appn.MenuCommands.DGridAddAttachment
+						+Appn.MenuCommands.DGridAddDocument
 						+'">'
 						+'<span class="glyphicon glyphicon-plus" style="padding-right: 5px;"></span>{0}</a></li>',
-						[App.localeData.dgrid_menuCmd_AddAttachment]));	
+						[App.localeData.dgrid_menuCmd_AddDocument]));	
+						if(!multipleDocsSelected)
+						{
+							mainMenuHtml.push(stringFormat(
+							'<li><a href="#" dwcmVolCommand="'
+							+Appn.MenuCommands.DGridAddAttachment
+							+'">'
+							+'<span class="glyphicon glyphicon-plus" style="padding-right: 5px;"></span>{0}</a></li>',
+							[App.localeData.dgrid_menuCmd_AddAttachment]));	
+						}
 					}
-				}
-				if (!multipleDocsSelected && volumeRights.ModifyDocRight)
-				{
-					mainMenuHtml.push(stringFormat(
-					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridEditDocumentMetadata
-					+'">'
-					+'<span class="glyphicon glyphicon-pencil" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_EditMetadata]));	
-				}
-				if (volumeRights.DeleteDocRight && selectedRowsCount>0)
-				{
-					// at least 1 document checkbox is checked
- 					mainMenuHtml.push(stringFormat(
-					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridDeleteDocument
-					+'">'
-					+'<span class="glyphicon glyphicon-minus" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_DeleteDocument]));	
-				}
-				if (AppHelper_IsViewableDocType(currRow.sys_docType) && !multipleDocsSelected)
-				{
-					mainMenuHtml.push(stringFormat(
-					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridViewDocument
-					+'">'
-					+'<span class="glyphicon glyphicon-eye-open" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_ViewDocument]));	
-				}
-				if(selectedVolumeObj.get("volConfig").forms.length>0)
-				{
-					if ($(window).width()>=1024 && $(window).height()>=768){
+					if (!multipleDocsSelected && volumeRights.ModifyDocRight)
+					{
 						mainMenuHtml.push(stringFormat(
 						'<li><a href="#" dwcmVolCommand="'
-						+Appn.MenuCommands.DGridForms
+						+Appn.MenuCommands.DGridEditDocumentMetadata
 						+'">'
-						+'<span class="glyphicon glyphicon glyphicon-list" style="padding-right: 5px;"></span>{0}</a></li>',
-						[App.localeData.dgrid_menuCmd_Forms]));	
+						+'<span class="glyphicon glyphicon-pencil" style="padding-right: 5px;"></span>{0}</a></li>',
+						[App.localeData.dgrid_menuCmd_EditMetadata]));	
 					}
-				}
-				if (currRow || selectedRowsCount>0)
-				{
+					if (volumeRights.DeleteDocRight && selectedRowsCount>0)
+					{
+						// at least 1 document checkbox is checked
+						mainMenuHtml.push(stringFormat(
+						'<li><a href="#" dwcmVolCommand="'
+						+Appn.MenuCommands.DGridDeleteDocument
+						+'">'
+						+'<span class="glyphicon glyphicon-minus" style="padding-right: 5px;"></span>{0}</a></li>',
+						[App.localeData.dgrid_menuCmd_DeleteDocument]));	
+					}
+					if (AppHelper_IsViewableDocType(currRow.sys_docType) && !multipleDocsSelected)
+					{
+						mainMenuHtml.push(stringFormat(
+						'<li><a href="#" dwcmVolCommand="'
+						+Appn.MenuCommands.DGridViewDocument
+						+'">'
+						+'<span class="glyphicon glyphicon-eye-open" style="padding-right: 5px;"></span>{0}</a></li>',
+						[App.localeData.dgrid_menuCmd_ViewDocument]));	
+					}
+					if(selectedVolumeObj.get("volConfig").forms.length>0)
+					{
+						if ($(window).width()>=1024 && $(window).height()>=768){
+							mainMenuHtml.push(stringFormat(
+							'<li><a href="#" dwcmVolCommand="'
+							+Appn.MenuCommands.DGridForms
+							+'">'
+							+'<span class="glyphicon glyphicon glyphicon-list" style="padding-right: 5px;"></span>{0}</a></li>',
+							[App.localeData.dgrid_menuCmd_Forms]));	
+						}
+					}
+					if (currRow || selectedRowsCount>0)
+					{
+						mainMenuHtml.push(stringFormat(
+						'<li><a href="#" dwcmVolCommand="'
+						+Appn.MenuCommands.DGridSaveSelected
+						+'">'
+						+'<span class="glyphicon glyphicon-download-alt" style="padding-right: 5px;"></span>{0}</a></li>',
+						[App.localeData.dgrid_menuCmd_SaveSelected]));
+					}
+					if (!multipleDocsSelected && currRow.sys_hasAttachment.toLowerCase()=="true")
+					{
+						mainMenuHtml.push(stringFormat(
+						'<li><a href="#" dwcmVolCommand="'
+						+Appn.MenuCommands.DGridShowAttList
+						+'">'
+						+'<span class="glyphicon glyphicon-paperclip" style="padding-right: 5px;"></span>{0}</a></li>',
+						[App.localeData.dgrid_menuCmd_ShowAttachments]));
+					}
 					mainMenuHtml.push(stringFormat(
 					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridSaveSelected
-					+'">'
-					+'<span class="glyphicon glyphicon-download-alt" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_SaveSelected]));
-				}
-				if (!multipleDocsSelected && currRow.sys_hasAttachment.toLowerCase()=="true")
-				{
-					mainMenuHtml.push(stringFormat(
-					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridShowAttList
-					+'">'
-					+'<span class="glyphicon glyphicon-paperclip" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_ShowAttachments]));
-				}
-				mainMenuHtml.push(stringFormat(
-				'<li><a href="#" dwcmVolCommand="'
-				+Appn.MenuCommands.DGridEmailSend
-				+'">'
-				+'<span class="glyphicon glyphicon-envelope" style="padding-right: 5px;"></span>{0}</a></li>',
-				[App.localeData.dgrid_menuCmd_EmailSend]));
-				if ((currRow || selectedRowsCount>0) 
-					&& (Appc.getCurrVolConfigParam("isPecVolume") || Appc.getCurrVolConfigParam("isPassiveFpaVolume"))
-					&& (currRow._L_FPAMID || currRow._L_PECMID)){
-					mainMenuHtml.push(stringFormat(
-					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridViewSendingHistory
+					+Appn.MenuCommands.DGridEmailSend
 					+'">'
 					+'<span class="glyphicon glyphicon-envelope" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_ViewSendingHistory]));
+					[App.localeData.dgrid_menuCmd_EmailSend]));
+					if ((currRow || selectedRowsCount>0) 
+						&& (Appc.getCurrVolConfigParam("isPecVolume") || Appc.getCurrVolConfigParam("isPassiveFpaVolume"))
+						&& (currRow._L_FPAMID || currRow._L_PECMID)){
+						mainMenuHtml.push(stringFormat(
+						'<li><a href="#" dwcmVolCommand="'
+						+Appn.MenuCommands.DGridViewSendingHistory
+						+'">'
+						+'<span class="glyphicon glyphicon-envelope" style="padding-right: 5px;"></span>{0}</a></li>',
+						[App.localeData.dgrid_menuCmd_ViewSendingHistory]));
+					}
+					if(selectedVolumeObj.get("volConfig").relations.length>0){
+						mainMenuHtml.push(stringFormat(
+						'<li><a href="#" dwcmVolCommand="'
+						+Appn.MenuCommands.DGridViewRelatedDocs
+						+'">'
+						+'<span class="glyphicon glyphicon-link" style="padding-right: 5px;"></span>{0}</a></li>',
+						[App.localeData.dgrid_menuCmd_ViewRelatedDocs]));
+					}
+
 				}
-				if(selectedVolumeObj.get("volConfig").relations.length>0){
-					mainMenuHtml.push(stringFormat(
-					'<li><a href="#" dwcmVolCommand="'
-					+Appn.MenuCommands.DGridViewRelatedDocs
-					+'">'
-					+'<span class="glyphicon glyphicon-link" style="padding-right: 5px;"></span>{0}</a></li>',
-					[App.localeData.dgrid_menuCmd_ViewRelatedDocs]));
-			    }
-
 			}
-		}
-		
-		// 2 add volume-context items
-		var vinfo = App.Models.ddTree.get('lastSelectedNode').volumeInfo 
-		if ( vinfo){
-			mainMenuHtml.push(stringFormat(
-			'<li><a href="#" dwcmCommand="'
-			+Appn.MenuCommands.UDFilter
-			+'">'
-			+'<span class="glyphicon glyphicon-filter" style="padding-right: 5px;"></span>{0}</a></li>',
-			[App.localeData.dgrid_menuCmd_Filter]));
+			
+			// 2 add volume-context items
+			var vinfo = App.Models.ddTree.get('lastSelectedNode').volumeInfo 
+			if ( vinfo){
+				mainMenuHtml.push(stringFormat(
+				'<li><a href="#" dwcmCommand="'
+				+Appn.MenuCommands.UDFilter
+				+'">'
+				+'<span class="glyphicon glyphicon-filter" style="padding-right: 5px;"></span>{0}</a></li>',
+				[App.localeData.dgrid_menuCmd_Filter]));
 
+				mainMenuHtml.push(stringFormat(
+				'<li><a href="#" dwcmCommand="'
+				+Appn.MenuCommands.AutoFilter
+				+'">'
+				+'<span class="glyphicon glyphicon-filter" style="padding-right: 5px;"></span>{0}</a></li>',
+				[App.localeData.dgrid_menuCmd_Autofilter]));
+			}
+			else{
+				//global search
+				mainMenuHtml.push(stringFormat(
+				'<li><a href="#" dwcmCommand="'
+				+Appn.MenuCommands.GlobalSearch
+				+'">'
+				+'<span class="glyphicon glyphicon-search" style="padding-right: 5px;"></span>{0}</a></li>',
+				[App.localeData.dgrid_menuCmd_Search]));
+				
+			}
+			
+			// 3 add constant menu items
+			if (mainMenuHtml.length>0)
+				mainMenuHtml.push('<li role="separator" class="divider"></li>'); // add delimiter
+			
+			
+			
 			mainMenuHtml.push(stringFormat(
-			'<li><a href="#" dwcmCommand="'
-			+Appn.MenuCommands.AutoFilter
-			+'">'
-			+'<span class="glyphicon glyphicon-filter" style="padding-right: 5px;"></span>{0}</a></li>',
-			[App.localeData.dgrid_menuCmd_Autofilter]));
-		}
-		else{
-			//global search
+			'<li><a href="#" dwcmCommand="AppSettings"><span class="glyphicon glyphicon-cog" style="padding-right: 5px;"></span>{0}</a></li>',
+			[App.localeData.settings]));
 			mainMenuHtml.push(stringFormat(
-			'<li><a href="#" dwcmCommand="'
-			+Appn.MenuCommands.GlobalSearch
-			+'">'
-			+'<span class="glyphicon glyphicon-search" style="padding-right: 5px;"></span>{0}</a></li>',
-			[App.localeData.dgrid_menuCmd_Search]));
+			'<li><a href="#" dwcmCommand="Logout"><span class="glyphicon glyphicon-log-out" style="padding-right: 5px;"></span>{0}</a>',
+			[App.localeData.disconnect]));	
+		// regular (not context ) menu end
+		}else{
+		// context menu
+			mainMenuHtml.push(stringFormat(
+			'<li >'+
+				'<a href="#" dwcmCommand="CmApply" objType="{0}" itemIndex="{1}">'+
+					'<span class="glyphicon glyphicon-ok" style="padding-right: 5px;"></span>{2}'+
+				'</a>'+
+			'</li>',
+			[cmObjType,cmObjIndex,App.localeData.cont_menuCmd_Apply]));
+			mainMenuHtml.push(stringFormat(
+			'<li >'+
+				'<a href="#" dwcmCommand="CmEdit" objType="{0}" itemIndex="{1}">'+
+					'<span class="glyphicon glyphicon-pencil" style="padding-right: 5px;"></span>{2}'+
+				'</a>'+
+			'</li>',
+			[cmObjType,cmObjIndex,App.localeData.cont_menuCmd_Edit]));
+			mainMenuHtml.push(stringFormat(
+			'<li >'+
+				'<a href="#" dwcmCommand="CmDelete" objType="{0}" itemIndex="{1}">'+
+					'<span class="glyphicon glyphicon-remove" style="padding-right: 5px;"></span>{2}'+
+				'</a>'+
+			'</li>',
+			[cmObjType,cmObjIndex,App.localeData.cont_menuCmd_Delete]));
 			
 		}
-		
-		// 3 add constant menu items
-		if (mainMenuHtml.length>0)
-			mainMenuHtml.push('<li role="separator" class="divider"></li>'); // add delimiter
-		
-		
-		
-		mainMenuHtml.push(stringFormat(
-		'<li><a href="#" dwcmCommand="AppSettings"><span class="glyphicon glyphicon-cog" style="padding-right: 5px;"></span>{0}</a></li>',
-		[App.localeData.settings]));
-		mainMenuHtml.push(stringFormat(
-		'<li><a href="#" dwcmCommand="Logout"><span class="glyphicon glyphicon-log-out" style="padding-right: 5px;"></span>{0}</a>',
-		[App.localeData.disconnect]));	
+	
 		$("#mainMenuItems").empty();
 		for(var i=0;i<mainMenuHtml.length;i++)
 		{
 			$("#mainMenuItems").append(mainMenuHtml[i]);
 		}
+
 		$("#mainMenuItems a[dwcmCommand]").off('click').on('click',App.Controllers.masterPage.onToolbarButtonClick);
 		$("#mainMenuItems a[dwcmVolCommand]").off('click').on('click',
 															  App.Controllers.masterPage.onMenuCommandDataGrid);
@@ -480,7 +510,7 @@ var instance =
 				  "</div>"+    
 				  "<div class='itemText'></div>"+
 				"</div>";
-
+			$placeHolder.empty();	
 			for(var i=0;i<itemList.length;i++)
 			{
 				var item = itemList[i];
@@ -520,6 +550,12 @@ var instance =
 			// click on Filter or Grouping item
 			$placeHolder.find(".itemCell div").off('click').on('click',function(e)
 			{
+				if($(this).data("tapEventFired")){
+					e.preventDefault();
+					$(this).removeData("tapEventFired");
+					return;
+				}
+					
 				var itemId = $(e.currentTarget).parent().attr("itemId");
 				if ($(e.currentTarget).parent().attr("type")=="filter")
 				{
@@ -538,7 +574,19 @@ var instance =
 				{
 					App.Controllers.masterPage.onGroupingClicked(itemId);
 				}
-			});        
+			});
+			$placeHolder.find('.itemCell[type="udfilter"] div').off('taphold').on('taphold',function(event){
+				$(this).data("tapEventFired", true);
+				$('#mainMenuBtn').trigger('click',['filter',-1]);
+				$(this).off('mouseup').on('mouseup',function(e){
+					setTimeout(function(elm) {
+						$(this).off('mouseup');
+						var itemId = $(elm).parent().attr("itemId");
+						$('#mainMenuBtn').trigger('click',['udfilter',itemId]);
+					}, 100,this);
+				});
+			});
+        
 		}
 	         },
 	renderFilterGroupingTab:function(strIcon, tabButtonText, doNotRenderFilterGrid)
@@ -645,6 +693,8 @@ var instance =
 						if (!filterCaption) filterCaption = App.localeData.NewFilter; 
 						var exprList = $("#exprEditor").expressionEditor("getExprList");
 						App.Controllers.masterPage.saveFilter(filterCaption,exprList);
+						App.Models.ddTree.readStoredUdFilters();
+						App.Views.masterPage.renderDfVolTabContainer("Filters");
 					}
 			    );
 			  },null,{that:this,msd:msd,filterCaption:filterCaption});
