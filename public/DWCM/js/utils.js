@@ -405,7 +405,7 @@ function AppHelper_getStaticResource(relativeUrl,handler)
         _handler: handler
     };
 	var getStaticResServlet = "GetStaticRes_dwcm?Module=";
-	if (startedFromVSCode){
+	if (window.startedFromVSCode){
 		dfmwebprefix = "";
 		getStaticResServlet = "";
 	}
