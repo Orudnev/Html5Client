@@ -90,6 +90,9 @@ var instance =
 			this.storePersist("userName",this.get("userName"));
 			this.storePersist("userPassword",this.get("userPassword"));
 			this.storePersist("rememberCredentials",this.get("rememberCredentials"));
+			var localeIndex = this.get("language");
+			this.storePersist("language",localeIndex);
+			App.setLocale(this.get("currLanguageCode"),null);	
 		}
     },
     getLanguageByCode: function(code,languageList){
@@ -187,10 +190,7 @@ var instance =
 	},
     initialize: function(initComplete)
     {
-         var currLanguageCode = this.get(Appn.Model.Settings.currLanguageCode);
-         this.set(Appn.Model.Settings.currentLanguage,
-                    this.getLanguageByCode(currLanguageCode,this.get(Appn.Model.Settings.languageList)));
-         App.localeData = App.setLocale(currLanguageCode,initComplete);
+         App.localeData = App.setLocale();
         //                                {
         //                                    //App.localeData= data;
         //                                    console.log('App.setLocale OK');
@@ -198,6 +198,7 @@ var instance =
          var userName = AppHelper_Settings_GetStrResource(Appn.Model.Settings.userName,"");
          var userPassword = AppHelper_Settings_GetStrResource(Appn.Model.Settings.userPassword,"");
          var rememberCredentials = AppHelper_Settings_GetResourceAsBool(Appn.Model.Settings.rememberCredentials,false);
+         var language = AppHelper_Settings_GetStrResource("language","0");
          var docListPageSize = AppHelper_Settings_GetResourceAsInt(Appn.Model.Settings.doclistPageSize,50);
          var lastPathBarValue = AppHelper_Settings_GetStrResource(Appn.Model.Settings.lastPathBarValue,"");
 		
@@ -209,6 +210,7 @@ var instance =
          this.set(Appn.Model.Settings.userName,userName,{validate:true});
          this.set(Appn.Model.Settings.userPassword,userPassword,{validate:true});
          this.set(Appn.Model.Settings.rememberCredentials,rememberCredentials,{validate:true});
+		 this.set("language",language,{validate:true});
          this.set(Appn.Model.Settings.doclistPageSize,docListPageSize,{validate:true});
         
          this.set(Appn.Model.Settings.dsn,

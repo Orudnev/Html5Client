@@ -5,11 +5,13 @@ var instance =
 			 {
 				 var pgHtml = compileTemplate(App.Templates.loginPage.html,null);
 				 $(".pageContainer").empty().append(pgHtml);
+				 $(".panel-body .selectpicker").selectpicker();
 				 if (App.Models.settings.get(Appn.Model.Settings.rememberCredentials)) 
 				 {
 					var token = {rootNodeSelector:"#LoginPage"}; 	
 					AppHelper_WholeMainPaneDialog.setValues_ModelToGui(App.Models.settings,token);
 				 }
+
 				 $("#mainMenuItems a[dwcmCommand]").off('click').on('click',
 							  App.Controllers.loginPage.onMenuCommand);		
 				 $("#btnConnectToServer").off("click").on("click",App.Controllers.loginPage,function(event)

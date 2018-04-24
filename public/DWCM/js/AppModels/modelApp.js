@@ -248,6 +248,14 @@ window.App = {
      },
      setLocale: function(localeCode,handler)
      {
+		 if (!localeCode && !handler)
+		 {
+			 var localeIndex = AppHelper_Settings_GetStrResource("language","0");
+			 var localeCode = "en";
+			 if (localeIndex=="1") localeCode = "it";
+			 if (App.Models.settings)
+ 			 	App.Models.settings.set("currLanguageCode",localeCode);
+		 }
          AppHelper_getStaticResource('DWCM/locale/dwcm-locale-'+localeCode+'.json',
                 function(data)
                 {
@@ -441,8 +449,8 @@ window.Appc = {
      rememberCredentials:function(cmd)
      {
          return Appc.propAccessorEx(Appn.Model.Settings.rememberCredentials,cmd,false);
-     },
-     setCurrentFilteredVol:function(value)
+     },	 
+	 setCurrentFilteredVol:function(value)
      {
         return App.Models.commonParams.set(Appn.Model.currentFilteredVol,value);   
      },

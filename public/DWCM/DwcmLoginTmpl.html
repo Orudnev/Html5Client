@@ -89,7 +89,19 @@ input[type="checkbox"]{
 				  placeHolder="<%= App.localeData.loginPage_Password %>" 
 				  >
 			</div>	
-			<div style="height:5px;clear:both;" ></div>
+			<!--<div style="height:5px;clear:both;" ></div> -->
+			<div class="form-group">
+				<label class="labelDlg">
+					<%=App.localeData.smtpSecurityLayer%>
+				</label>							
+				<select class="bindable selectpicker pull-right" 
+									type="select"
+									dataField="language" 
+									data-width="50%" >										
+<option value="0" dataIndex="0"><%= App.localeData.lang_En %></option>
+<option value="1" dataIndex="1"><%= App.localeData.lang_It %></option>
+				</select>	
+			</div>
 			<div class="form-group" >
 				<label class="labelDlg" >
 					Remember credentials
