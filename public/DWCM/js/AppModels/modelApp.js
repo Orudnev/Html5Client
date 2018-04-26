@@ -49,6 +49,7 @@ window.Appn =
 	 ViewHistoryItemAsXml: "ViewHistoryItemAsXml",
 	 AutoFilter:"AutoFilter",
 	 UDFilter:"UDFilter",
+	 Grouping:"Grouping",
 	 DGridAddDocument: "AddDocument",
 	 DGridAddAttachment: "AddAttachment",
 	 DGridDeleteDocument: "DeleteDocument",

@@ -469,6 +469,7 @@ var instance =
             if (bresult)
             {
                 dataToken.groupings = result; 
+                App.Models.ddTree.readStoredUdGroupings();
                 App.Views.masterPage.renderDfVolTabContainer("Groupings");
             }
         }
@@ -488,6 +489,19 @@ var instance =
             selNode.filters.push(newItem);
         }
     },
+    readStoredUdGroupings:function(){
+        var selNode = App.Models.ddTree.getSelectedNode();
+        volName = selNode.text;
+        if (selNode.volumeInfo) volName = selNode.volumeInfo.name;
+        var volSettings = new AppHelper_VolumeSettingsClass(volName); 
+        var udGroupings  = volSettings.settings.udGroupings;
+        var dfmGrpCount = selNode.groupings.length;
+        for(var i=0;i<udGroupings.length;i++){
+            var udGrouping = udGroupings[i];
+            var newItem = {id:i.toString(),name:udGrouping.caption,allowEdit:true};  
+            selNode.groupings.push(newItem);
+        }
+    },    
     refreshNodeInfo: function(node)
     {
         node.nodeInfo = 

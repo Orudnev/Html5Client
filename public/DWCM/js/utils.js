@@ -898,6 +898,7 @@ function AppHelper_VolumeSettingsClass(volumeName)
 	this.settings = {
 		SearchExpression:"",
 		udFilters:[],
+		udGroupings:[],
 		nameGenRule:"",
 		massiveSendingMap:
 		{

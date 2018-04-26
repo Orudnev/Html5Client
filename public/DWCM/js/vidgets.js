@@ -970,8 +970,11 @@
 
 	_default.settings = {
 		title:"Dialog title",
-        buttons:{btnOk:false,btnCancel:true,btnMenu:false},//visibility
-		buttonsDisabled:{btnOk:false,btnCancel:false,btnMenu:false},
+		allowTitleEdit:false,
+		titleGlyphIcon:"",
+        buttons:{btnOk:false,btnCancel:true,btnMenu:false,btnCustomCmd:false},//visibility
+		btnCustomCmdGlyphIcon:"",
+		buttonsDisabled:{btnOk:false,btnCancel:false,btnMenu:false,btnCustomCmd:false},
 		contentHtml:"",
 		model:null,
 		doNotRemoveNullHeight:false,
@@ -980,7 +983,8 @@
 		onMenuItemClicked: undefined,
         onOkBtnClicked: undefined,
 		onCancelBtnClicked: undefined,
-		onCustomButtonClicked: undefined,
+		onBtnCustomCmdClicked:undefined,	//additional button in toolbar
+		onCustomButtonClicked: undefined,   //any button in client area (not toolbar button)
 		onContentElementClicked:undefined,
 		onGuiValueChanged:undefined,
 		onRendered:undefined,
@@ -1150,6 +1154,7 @@
 		setButton.apply(this,["ok",this.options.buttons.btnOk,this.options.buttonsDisabled.btnOk]);
 		setButton.apply(this,["cancel",this.options.buttons.btnCancel,this.options.buttonsDisabled.btnCancel]);
 		setButton.apply(this,["menu",this.options.buttons.btnMenu,this.options.buttonsDisabled.btnMenu]);
+		setButton.apply(this,["customBtnCmd",this.options.buttons.btnCustomCmd,this.options.buttonsDisabled.btnCustomCmd]);
 	}
 	
 	ThePlugin.prototype.setBtnState = function (command,bDisabled)
@@ -1195,11 +1200,20 @@
 		this.$wrapper.empty();
 		this.$element.empty();
 		this.$wrapper.append(this.template.titleBar);
-		this.$wrapper.find("div h3").text(this.options.title);
+		//this.$wrapper.find("div h3").text(this.options.title);
+		this.$wrapper.find("div h3 input").val(this.options.title)
+		if (this.options.titleGlyphIcon)
+			this.$wrapper.find("span.glyphicon").addClass(this.options.titleGlyphIcon);
+		else
+			this.$wrapper.find("span.glyphicon").remove();
 		
+
 		this.$wrapper.find("div.toolbarDiv").append(this.template.btnCancel);
 		this.$wrapper.find("div.toolbarDiv").append(this.template.btnOk);
 		this.$wrapper.find("div.toolbarDiv").append(this.template.btnMenu);
+		this.$wrapper.find("div.toolbarDiv").append(this.template.btnCustomCmd);
+		if (this.options.btnCustomCmdGlyphIcon)
+			this.$wrapper.find("button[command='customBtnCmd']").addClass(this.options.btnCustomCmdGlyphIcon);
 		this.refreshButtons();
 		this.$wrapper.append(this.template.waitIndicator);
 		this.$dlgContentContainer=$(this.template.dialogContent);
@@ -1232,6 +1246,9 @@
 		if (typeof (this.options.onCancelBtnClicked) === 'function') {
 			this.$element.on('cancelBtnClicked', this.options.onCancelBtnClicked);
 		}
+		if (typeof (this.options.onBtnCustomCmdClicked) === 'function') {
+			this.$element.on('customBtnCmdBtnClicked', this.options.onBtnCustomCmdClicked);
+		}		
 		if (typeof (this.options.onCustomButtonClicked) === 'function') {
 			this.$element.on('customButtonClicked', this.options.onCustomButtonClicked);
 		}
@@ -1257,6 +1274,7 @@
 		this.$element.off('menuItemClicked');
         this.$element.off('okBtnClicked');
         this.$element.off('cancelBtnClicked');
+		this.$element.off('customBtnCmdBtnClicked');		
 		this.$element.off('customButtonClicked');
         this.$element.off('contentElementClicked');
         this.$element.off('guiValueChanged');
@@ -1295,6 +1313,11 @@
 		'<div class="row">'+
 			'<div class="col-xs-7">'+
 				'<h3 class="fntHeader" style="display:inline-block;padding-left:20px">'+
+					'<span class="glyphicon " style="margin-right: 5px;"></span>'+
+					'<span>'+
+						'<input type="text"'+ 
+							'style="background-color: transparent; border: none; width: 40vw;" >'+					
+						'</span>'+
 				'</h3>'+
 			'</div>'+
 			'<div class="col-xs-5 toolbarDiv">'+
@@ -1322,6 +1345,10 @@
 		  '<ul id="menuItems" class="dropdown-menu pull-right">'+
 		  '</ul>'+
 		'</div>',
+		btnCustomCmd:
+		'<button type="button" style="margin-top:3px;margin-bottom:3px; margin-right:3px;" '+ 'command="customBtnCmd" '+
+		'class="toolbarBtn btn btn-primary menuBtn pull-right glyphicon ">'+
+		'</button>',		
 		menuItem:
 		'<li>'+
 			'<a href="#" >'+

@@ -265,6 +265,15 @@ var instance =
 				+'">'
 				+'<span class="glyphicon glyphicon-filter" style="padding-right: 5px;"></span>{0}</a></li>',
 				[App.localeData.dgrid_menuCmd_Autofilter]));
+
+				mainMenuHtml.push(stringFormat(
+				'<li><a href="#" dwcmCommand="'
+				+Appn.MenuCommands.Grouping
+				+'">'
+				+'<span class="glyphicon glyphicon-paperclip" style="padding-right: 5px;"></span>{0}</a></li>',
+				[App.localeData.menuCmd_Grouping]));
+
+
 			}
 			else{
 				//global search
@@ -698,6 +707,24 @@ var instance =
 					}
 			    );
 			  },null,{that:this,msd:msd,filterCaption:filterCaption});
+	},
+	renderUDGroupingForm:function(msd,groupingCaption)
+	{
+		contentHtml= '<div>blablabla</div>';
+		if (!groupingCaption) groupingCaption = App.localeData.NewGrouping;
+		$("#dialogContLvl1").dwcmDialog({
+			title: groupingCaption,
+			allowTitleEdit:true,
+			titleGlyphIcon:"glyphicon-paperclip",
+			buttons:{btnOk:true,btnCancel:true,btnMenu:false,btnCustomCmd:true},
+			buttonsDisabled:{btnOk:true,btnCancel:false,btnMenu:false,btnCustomCmd:false},
+			btnCustomCmdGlyphIcon:"glyphicon-floppy-disk",
+			onBtnCustomCmdClicked:function(){console.log("btn clicked")},
+			contentHtml: contentHtml,
+			context: this,	
+			onContentElementClicked: $.proxy(this.onFormListItemSelected,this),
+			onOkBtnClicked: $.proxy(this.doOpenForm,this),
+			});
 	},
 	getBtnDDTreeAsTblOrderAttrs:function()
 	{

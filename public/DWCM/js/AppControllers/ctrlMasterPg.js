@@ -69,6 +69,10 @@ var instance =
 				 {
 					 App.Controllers.masterPage.openSearchDialog();
 				 }
+				 else if(strCommand == Appn.MenuCommands.Grouping)
+				 {
+					 App.Controllers.masterPage.openGroupingDialog();
+				 }				 
 				 else if(strCommand == Appn.MenuCommands.GlobalSearch)
 				 {
 					 require(['jsx!glbSearch'],function(fjsx){
@@ -510,6 +514,19 @@ var instance =
 					function (bresult,dataObj,token)
 					{
 						App.Views.masterPage.renderUDFilterForm(dataObj.oMSD);
+					});		
+				});
+			},
+			openGroupingDialog:function()
+			{
+				require(["modelDfmVolume","viewDfmVolume","bootstrapSelectPicker"],function(VolModel,VolView)
+				{ 
+					var selNode = App.Models.ddTree.getSelectedNode();
+					var volumeId = selNode.id; 
+					wmw_getMSD(App.getSessionId(),volumeId,"","",null,
+					function (bresult,dataObj,token)
+					{
+						App.Views.masterPage.renderUDGroupingForm(dataObj.oMSD);
 					});		
 				});
 			},
