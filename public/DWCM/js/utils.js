@@ -1240,3 +1240,63 @@ AppHelper_WholeMainPaneDialog=
 	}
 }
 
+
+function AppHelper_LocalizeResChecker()
+{
+	window.localemodel = {
+		defaultLng:{},
+		otherLangs:[],
+		getLngRes : function(localeCode,handler){
+	         AppHelper_getStaticResource('DWCM/locale/dwcm-locale-'+localeCode+'.json',
+                function(data)
+                {
+                    var jsonObj = $.parseJSON(data);
+                    App.localeData= jsonObj;
+                    if (handler!=null)
+                            handler(jsonObj);
+                });			
+		},
+		loadAllRes: function(handler){
+			window.localemodel.getLngRes("en",function(jsonObj){
+				window.localemodel.defaultLng = jsonObj;
+				window.localemodel.getLngRes("it",function(jsonObj){
+					window.localemodel.otherLangs.push({localeCode:"it",jsonObj:jsonObj})
+					if (handler) handler();
+				});
+			});
+		},
+		compareRes: function(objSrc, objTarget){
+			var result = {};
+			var absentInSource = [];
+			var absentInTarget = [];
+			for (var prop in objSrc) {
+				if (!objSrc.hasOwnProperty(prop)) continue; //prototype's property
+				if (objTarget.hasOwnProperty(prop)) {
+					//present in both objects
+					result[prop] = objTarget[prop];
+					continue; // OK, do nothing
+				}
+				if (!objTarget.hasOwnProperty(prop)){
+					// absent in target object, add missing property into result target object
+					result[prop] = objSrc[prop]+"_?";
+					absentInTarget.push(prop);
+				}
+			}
+			for (var prop in objTarget) {
+				if (!objTarget.hasOwnProperty(prop)) continue; //prototype's property
+				if (!objSrc.hasOwnProperty(prop)){
+					absentInSource.push(prop);
+				}
+			}
+			console.log({absentInSource:absentInSource,absentInTarget:absentInTarget});
+			console.log(JSON.stringify(result));
+		}
+
+
+	}
+	
+	window.localemodel.loadAllRes(function(){
+		var wlm = window.localemodel;
+		wlm.compareRes(wlm.defaultLng,wlm.otherLangs[0].jsonObj);
+	});
+}
