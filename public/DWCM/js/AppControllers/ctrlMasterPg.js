@@ -100,13 +100,20 @@ var instance =
 					var objtype = $(e.currentTarget).attr('objtype');
 					var itemIndex = $(e.currentTarget).attr('itemindex');
 					if(strCommand == 'CmApply'){
-						App.Controllers.masterPage.applyUdFilter(itemIndex);	
+						if (objtype === "udfilter")
+							App.Controllers.masterPage.applyUdFilter(itemIndex);
+						if (objtype === "udGrouping"){
+							App.Controllers.masterPage.applyStoredUdGrouping(itemIndex);
+						}
 				 	}
 					if(strCommand == 'CmEdit'){
 						App.Controllers.masterPage.editUdFilter(itemIndex);	
 				 	}
 					if(strCommand == 'CmDelete'){
-						App.Controllers.masterPage.deleteUdFilter(itemIndex);	
+						if (objtype === "udfilter")
+							App.Controllers.masterPage.deleteUdFilter(itemIndex);
+						if (objtype === "udGrouping")
+							App.Controllers.masterPage.deleteUdGrouping(itemIndex);
 				 	}
 				 }
 			 },
@@ -402,6 +409,33 @@ var instance =
 				},this);
 				Appc.getMsdOfSelectedNode(hndlr);
 			},
+			applyStoredUdGrouping:function(groupingIndex){
+				var selNode = App.Models.ddTree.getSelectedNode();
+				var volumeName = selNode.volumeInfo.name;
+				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
+				var grpObj = volSettings.settings.udGroupings[groupingIndex];
+				this.applyUdGrouping(volumeName,grpObj.fieldList,grpObj.caption);	
+			},
+			applyUdGrouping:function(volName,fieldList,caption){
+				require(["modelDfmGrouping","viewDfmGrouping"],function(GrpModel,GrpView)
+				{
+				var newGgrouping = Appc.getCurrentGrouping(); 
+				newGgrouping.model = new GrpModel();
+				var view = new GrpView();
+				view.model = newGgrouping.model;
+				newGgrouping.model.set("volumeName",volName);
+				newGgrouping.model.set("mainViewSelector","#VolDocumentListPaneExt");
+				newGgrouping.model.set("groupingName",caption);
+				newGgrouping.model.set("mainView",view);
+				
+				wmw_getVolumeGroupingByFields(App.getSessionId(),volName,fieldList,newGgrouping.model,
+					function(bresult,result,errorStr,that){
+					result.name = that.get('groupingName'); 
+					that.onReadGroupingCompleted(bresult,result,errorStr,that,true);
+					});
+									
+				});
+			},			
 			editUdFilter:function(filterIndex){
 				var selNode = App.Models.ddTree.getSelectedNode();
 				var volumeName = selNode.volumeInfo.name;
@@ -419,8 +453,16 @@ var instance =
 				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
 				volSettings.settings.udFilters.splice(filterIndex,1);
 				volSettings.save();	
-				$('.itemCell[type="udfilter"][itemId="'+0+'"]').remove();			
+				$('.itemCell[type="udfilter"][itemId="'+filterIndex+'"]').remove();			
 			},
+			deleteUdGrouping:function(groupingIndex){
+				var selNode = App.Models.ddTree.getSelectedNode();
+				var volumeName = selNode.volumeInfo.name;
+				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
+				volSettings.settings.udGroupings.splice(groupingIndex,1);
+				volSettings.save();	
+				$('.itemCell[type="udGrouping"][itemId="'+groupingIndex+'"]').remove();			
+			},			
 			doFilter:function(sqlStr,filterName)
 			{
 				 require(["modelDfmVolume","viewDfmVolume"],function(VolModel,VolView)
@@ -463,6 +505,26 @@ var instance =
 
 				volSettings.save();
 			},
+			saveUdGrouping:function(grpName,fldList){
+				var selNode = App.Models.ddTree.getSelectedNode();
+				var volumeName = selNode.volumeInfo.name;
+				var volSettings = new AppHelper_VolumeSettingsClass(volumeName);
+				var isFound = false;
+				var newItem = {caption:grpName,fieldList:fldList};
+				for (var i=0;i<volSettings.settings.udGroupings.length;i++)
+				{
+					if (volSettings.settings.udGroupings[i].caption === grpName)
+					{
+						volSettings.settings.udGroupings[i] = newItem;
+						isFound = true;
+						break;
+					}
+				}
+				if (!isFound)
+					volSettings.settings.udGroupings.push(newItem);
+
+				volSettings.save();				
+			},
 			doOpenUDFilter:function(volumeName,searchStr){
 				require(["modelDfmVolume","viewDfmVolume"],function(VolModel,VolView)
 				{
@@ -502,8 +564,8 @@ var instance =
 					 App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.filterAutoIcon,"");
 					 srchVol.model.open();
 				 });
-			},
-		
+			},	
+
 			openSearchDialog:function()
 			{
 				require(["modelDfmVolume","viewDfmVolume","bootstrapSelectPicker"],function(VolModel,VolView)

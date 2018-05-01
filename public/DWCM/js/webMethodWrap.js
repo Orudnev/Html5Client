@@ -891,6 +891,81 @@ function wmw_getVolumeGroupings(sessionId,volumeName,dataToken,handlerFunc)
   );       
 }
 
+function wmw_getVolumeGroupingByFields(sessionId,volumeName,fldNames,dataToken,handlerFunc)
+{
+    //returns data-rows of grouping specified by field list 
+    var dataTokenWrap = {dataToken:dataToken,handlerFunc:handlerFunc};    
+
+    var srequestFormatStr = 
+'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
+	'<SOAP-ENV:Body>'+
+		'<tns:getVolumeGroupingByFields xmlns:tns="http://Df5.comped.it/">'+
+			'<sessionId>{0}</sessionId>'+
+			'<volumeName>{1}</volumeName>'+
+            '{2}'+
+		'</tns:getVolumeGroupingByFields>'+
+	'</SOAP-ENV:Body>'+
+'</SOAP-ENV:Envelope>';
+    var sGroupingsFormatStr = '<groupingFields>{0}</groupingFields>';
+
+    var strGroupings = "";
+    for (var i=0;i<fldNames.length;i++){
+        strGroupings += stringFormat(sGroupingsFormatStr,[fldNames[i]]);         
+    }
+
+  var strRequest = stringFormat(srequestFormatStr,[sessionId,volumeName,strGroupings]);    
+  wmw_soapRequest(strRequest,dataTokenWrap,
+  function(bresult,responseData,dataTokenWrap)
+  {
+      var handlerFunc = dataTokenWrap.handlerFunc;
+      var dataToken = dataTokenWrap.dataToken;
+      var errorStr = "";
+      var result = null;
+      if (bresult)
+      {
+          result = {};
+          result.name = $(responseData).find('name').text();
+          var xFields = $(responseData).find('fields');
+          result.columns = [];
+          for(var i=0;i<xFields.length;i++)
+          {
+              var item = xFields[i];
+              var strFieldName = $(item).text();
+              var column = {field:strFieldName,sortable:true,title:strFieldName};
+              result.columns.push(column);
+          }
+          result.columns.push({field:"sysGroup_Count",sortable:true,title:"Count"}); //last visible "system" column
+          var xGroups = $(responseData).find('groups');
+          result.data = [];
+          for(var i=0;i<xGroups.length;i++)
+          {
+              var item = xGroups[i];
+              var newRow = {};
+              var count = $(item).find('count').text();
+              var query = $(item).find('query').text();
+              newRow.sysGroup_Count = count;
+              newRow.sysGroup_Query = query; 
+              var xRowValues = $(item).find('fieldValues');      
+              for (var j=0;j<xRowValues.length;j++)
+              {
+                  var itemJ = xRowValues[j];
+                  var fldName = result.columns[j].field;
+                  var fldValue = $(itemJ).text();
+                  newRow[fldName] = fldValue;
+              }
+              newRow.sysGroup_Selected = false;
+              result.data.push(newRow);
+          }
+      }
+      else
+      {
+          errorStr = responseData;
+      }
+      handlerFunc(true,result,errorStr,dataToken);
+  }
+  );      
+}
+
 
 function wmw_getVolumeInfo(sessionId,volumeName,dataToken,handlerFunc)
 {

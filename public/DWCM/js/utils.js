@@ -299,6 +299,21 @@ function AppHelper_compileSelectPicker(selPickerCfg)
 		return $mainTemplate[0].outerHTML;
 }
 
+function AppHelper_DisableSysContextMenu(disable){
+	if (disable)
+	{
+		window.oncontextmenu = function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
+		};
+	}
+	else
+	{
+		window.oncontextmenu = null;
+	}
+}
+
 function AppHelper_GetDocTypeIcon(extention)
 {	
 	var ext = extention.toLowerCase();

@@ -308,13 +308,16 @@ var instance =
 				'</a>'+
 			'</li>',
 			[cmObjType,cmObjIndex,App.localeData.cont_menuCmd_Apply]));
-			mainMenuHtml.push(stringFormat(
-			'<li >'+
-				'<a href="#" dwcmCommand="CmEdit" objType="{0}" itemIndex="{1}">'+
-					'<span class="glyphicon glyphicon-pencil" style="padding-right: 5px;"></span>{2}'+
-				'</a>'+
-			'</li>',
-			[cmObjType,cmObjIndex,App.localeData.cont_menuCmd_Edit]));
+			if(cmObjType === 'udfilter'){
+				// show "edit" command for user defined filters and don't show for groupings
+				mainMenuHtml.push(stringFormat(
+				'<li >'+
+					'<a href="#" dwcmCommand="CmEdit" objType="{0}" itemIndex="{1}">'+
+						'<span class="glyphicon glyphicon-pencil" style="padding-right: 5px;"></span>{2}'+
+					'</a>'+
+				'</li>',
+				[cmObjType,cmObjIndex,App.localeData.cont_menuCmd_Edit]));
+			}
 			mainMenuHtml.push(stringFormat(
 			'<li >'+
 				'<a href="#" dwcmCommand="CmDelete" objType="{0}" itemIndex="{1}">'+
@@ -510,7 +513,7 @@ var instance =
 		}
 
 
-		var renderFltGroup = function($placeHolder,itemList,imgsrc)
+		var renderFltGroup = function($placeHolder,itemList,imgsrc,mode)
 		{
 			var itemTmpl = 
 				"<div class='itemCell' >"+  
@@ -528,13 +531,17 @@ var instance =
 				$itemTmpl.attr('itemId',item.id);
 				if (imgsrc.indexOf("filter")>-1)
 					$itemTmpl.attr('type',"filter");
-				if (item.allowEdit){
+				if (item.allowEdit && mode=="Filters"){
 					imgsrcCurr = Appn.Icons.DDtreeIcon.udFilterIcon;
 					$itemTmpl.attr('type',"udfilter");
 				}
 	
 				if (imgsrc.indexOf("grouping")>-1)
 					$itemTmpl.attr('type',"grouping");
+				if (item.allowEdit && mode=="Groupings"){
+					imgsrcCurr = Appn.Icons.DDtreeIcon.udGroupingIcon;
+					$itemTmpl.attr('type',"udGrouping");
+				}
 				$itemTmpl.find('img').attr('src',imgsrcCurr);
 				$itemTmpl.find('.itemText').text(item.name);
 				$placeHolder.append($itemTmpl);
@@ -545,14 +552,14 @@ var instance =
 		{
 			$placeHolder = $("#accrdFilters .VolSumTabObjCont");
 			if (selNode.filters && selNode.filters.length>0){ 
-				renderFltGroup($placeHolder,selNode.filters,Appn.Icons.DDtreeIcon.filterIcon);
+				renderFltGroup($placeHolder,selNode.filters,Appn.Icons.DDtreeIcon.filterIcon,mode);
 			}
 		}
 		if (mode=="Groupings")
 		{
 			$placeHolder = $("#accrdGroupings .VolSumTabObjCont");
 			if (selNode.groupings && selNode.groupings.length>0)
-				renderFltGroup($placeHolder,selNode.groupings,Appn.Icons.DDtreeIcon.groupingIcon);
+				renderFltGroup($placeHolder,selNode.groupings,Appn.Icons.DDtreeIcon.groupingIcon,mode);
 		}
 		if ($placeHolder)
 		{
@@ -584,9 +591,10 @@ var instance =
 					App.Controllers.masterPage.onGroupingClicked(itemId);
 				}
 			});
+			AppHelper_DisableSysContextMenu(true);
 			$placeHolder.find('.itemCell[type="udfilter"] div').off('taphold').on('taphold',function(event){
 				$(this).data("tapEventFired", true);
-				$('#mainMenuBtn').trigger('click',['filter',-1]);
+				$('#mainMenuBtn').trigger('click',['udfilter',-1]);
 				$(this).off('mouseup').on('mouseup',function(e){
 					setTimeout(function(elm) {
 						$(this).off('mouseup');
@@ -595,7 +603,18 @@ var instance =
 					}, 100,this);
 				});
 			});
-        
+			$placeHolder.find('.itemCell[type="udGrouping"] div').off('taphold').on('taphold',function(event){
+				$(this).data("tapEventFired", true);
+				$('#mainMenuBtn').trigger('click',['udGrouping',-1]);
+				$(this).off('mouseup').on('mouseup',function(e){
+					setTimeout(function(elm) {
+						$(this).off('mouseup');
+						var itemId = $(elm).parent().attr("itemId");
+						$('#mainMenuBtn').trigger('click',['udGrouping',itemId]);
+					}, 100,this);
+				});
+			});
+
 		}
 	         },
 	renderFilterGroupingTab:function(strIcon, tabButtonText, doNotRenderFilterGrid)
@@ -710,20 +729,75 @@ var instance =
 	},
 	renderUDGroupingForm:function(msd,groupingCaption)
 	{
-		contentHtml= '<div>blablabla</div>';
+		contentHtml = 	'<table id="SelectFieldTable">'+
+
+						'</table>';
+		var grpDlgModel = {
+			volumeName: msd.volumeName,
+			groupingCaption: "",
+			rows:[],
+			onSelectionChanged:function(){
+				var selRows = $('#SelectFieldTable').bootstrapTable('getSelections');
+				$("#dialogContLvl1").dwcmDialog('setBtnState',['ok',selRows.length==0]);
+				$("#dialogContLvl1").dwcmDialog('setBtnState',['customBtnCmd',selRows.length==0]);	
+			},
+			onSaveButtonClicked:function(){
+				var grpCaption = $('#dialogContLvl1 h3 input').val();
+				this.groupingCaption = grpCaption; 
+				var selRows = $('#SelectFieldTable').bootstrapTable('getSelections');
+				var selectedFields = [];
+				for(var i=0;i<selRows.length;i++){
+					selectedFields.push(selRows[i].fldName);	
+				}
+				App.Controllers.masterPage.saveUdGrouping(grpCaption,selectedFields);
+				App.Models.ddTree.readStoredUdGroupings();
+				App.Views.masterPage.renderDfVolTabContainer("Groupings");
+			},
+			onOkButtonClicked:function(){
+				var selRows = $('#SelectFieldTable').bootstrapTable('getSelections');
+				var fldList = [];
+				for(var i=0;i<selRows.length;i++){
+					fldList[i] = selRows[i].fldName;
+				}
+				this.grpCaption = $('#dialogContLvl1 h3 input').val();
+				$("#dialogContLvl1").dwcmDialog("remove");
+				App.Controllers.masterPage.applyUdGrouping(this.volumeName,fldList,this.grpCaption);
+			}
+		};
+		for(var i=0;i<msd.jFields.length;i++){
+			var rowItem = {isSelected:false,fldName:msd.jFields[i].name};
+			grpDlgModel.rows.push(rowItem);
+		}
+
 		if (!groupingCaption) groupingCaption = App.localeData.NewGrouping;
 		$("#dialogContLvl1").dwcmDialog({
 			title: groupingCaption,
 			allowTitleEdit:true,
 			titleGlyphIcon:"glyphicon-paperclip",
 			buttons:{btnOk:true,btnCancel:true,btnMenu:false,btnCustomCmd:true},
-			buttonsDisabled:{btnOk:true,btnCancel:false,btnMenu:false,btnCustomCmd:false},
+			buttonsDisabled:{btnOk:true,btnCancel:false,btnMenu:false,btnCustomCmd:true},
 			btnCustomCmdGlyphIcon:"glyphicon-floppy-disk",
-			onBtnCustomCmdClicked:function(){console.log("btn clicked")},
+			onBtnCustomCmdClicked: $.proxy(grpDlgModel.onSaveButtonClicked,grpDlgModel),
 			contentHtml: contentHtml,
-			context: this,	
-			onContentElementClicked: $.proxy(this.onFormListItemSelected,this),
-			onOkBtnClicked: $.proxy(this.doOpenForm,this),
+			context: this,
+			onRendered: $.proxy(function(){
+							$('#SelectFieldTable').bootstrapTable({
+                        	columns : [
+								{	field: 'isSelected',
+									checkbox: true
+									},
+								{	field: 'fldName',
+									title: "Select grouping fields"}	
+									],
+							data: grpDlgModel.rows,
+							onCheck:grpDlgModel.onSelectionChanged,
+							onUncheck:grpDlgModel.onSelectionChanged,
+							onCheckAll:grpDlgModel.onSelectionChanged,
+							onUncheckAll:grpDlgModel.onSelectionChanged
+							});
+								      							
+						},grpDlgModel),	
+			onOkBtnClicked: $.proxy(grpDlgModel.onOkButtonClicked,grpDlgModel)
 			});
 	},
 	getBtnDDTreeAsTblOrderAttrs:function()

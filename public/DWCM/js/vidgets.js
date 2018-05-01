@@ -1017,7 +1017,8 @@
 			refreshButtons: $.proxy(this.refreshButtons, this),
 			refreshMenu: $.proxy(this.refreshMenu, this),
 			setModel: $.proxy(this.setModel, this),
-			setWaitIndicator: $.proxy(this.setWaitIndicator, this)
+			setWaitIndicator: $.proxy(this.setWaitIndicator, this),
+			setBtnState: $.proxy(this.setBtnState, this)
 		};
 	};
 	
@@ -1160,7 +1161,7 @@
 	ThePlugin.prototype.setBtnState = function (command,bDisabled)
 	{
 		this.$wrapper
-			.find("button[command='"+command+"']").prop("disabled",this.options.buttons.btnMenu.disabled);
+			.find("button[command='"+command+"']").prop("disabled",bDisabled);
 	}
 	
 	ThePlugin.prototype.setModel = function (newModel)

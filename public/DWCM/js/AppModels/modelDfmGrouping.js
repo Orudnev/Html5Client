@@ -29,11 +29,14 @@ var instance =
             }
         }        
     },
-    onReadGroupingCompleted:function(bresult,result,errorStr,that)
+    onReadGroupingCompleted:function(bresult,result,errorStr,that,isUdGrouping)
     {
         hideWaitIndicator();
         that.set("groupingObject",result);
-        App.Views.masterPage.renderFilterGroupingTab(Appn.Icons.DDtreeIcon.groupingIcon,result.name,true);
+        var icon = Appn.Icons.DDtreeIcon.groupingIcon;
+        if (isUdGrouping)
+            icon = Appn.Icons.DDtreeIcon.udGroupingIcon;
+        App.Views.masterPage.renderFilterGroupingTab(icon,result.name,true);
         that.set("selectedGroupId",0);
         that.get('mainView').render();
         that.openGrouping(result.data[0]);

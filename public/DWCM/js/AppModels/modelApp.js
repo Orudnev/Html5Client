@@ -115,6 +115,7 @@ window.Appn =
 		 virtualDirIcon: "DWCM/image/DirIcons/VolumeVV.svg",
 		 filterIcon: "DWCM/image/DirIcons/filter.svg",
 		 udFilterIcon: "DWCM/image/DirIcons/filterGreen.svg",
+		 udGroupingIcon: "DWCM/image/DirIcons/groupingGreen.svg",
 		 filterAutoIcon:"DWCM/image/DirIcons/filterAuto.svg",
 		 groupingIcon: "DWCM/image/DirIcons/grouping.svg",
 		 searchIcon: "DWCM/image/DirIcons/search.svg",

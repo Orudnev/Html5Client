@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html >
+<head>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"  crossorigin="anonymous">
+	
+	<!-- Jquery -->  
+	<link  href="GetStaticRes_dwcm?Module=DWCM/DwcmIndex.css" type="text/css" rel="stylesheet" >  
+	
+	<link href="DWCM/js/bootstrapTable/bootstrap-table.css" rel="stylesheet">
+	<link href="DWCM/js/bootstrap-select-1.12.1/css/bootstrap-select.css" rel="stylesheet">
+</head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<body  >
+<div class="pageContainer " style = "width: 100vw;height: 100vh;" >
+    
+    <style>
+		
+		
+		@media all and (orientation: portrait)
+		{
+			.waitFirstLoading
+			{
+				width:30vmax;
+				height:30vmax;
+				position: absolute;
+				top: 35vmax;
+				left: calc(50vw - 15vmax);
+			}
+		}
+
+		
+		@media all and (orientation: landscape)
+		{
+			.waitFirstLoading
+			{
+				width:30vmax;
+				height:30vmax;
+				position: absolute;
+				top: calc(50vh - 16vmax);
+				left: 35vmax;
+			}
+		}
+		
+	</style>
+    <img src="DWCM/image/loading-circle.gif" 
+    	class="waitFirstLoading">
+</div>
+
+
+
+	<script data-main="/GetStaticRes_dwcm?Module=DWCM/appRelease.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.min.js"></script>
+	
+</body>
+</html> 
