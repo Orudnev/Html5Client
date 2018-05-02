@@ -594,7 +594,9 @@ var instance =
 			AppHelper_DisableSysContextMenu(true);
 			$placeHolder.find('.itemCell[type="udfilter"] div').off('taphold').on('taphold',function(event){
 				$(this).data("tapEventFired", true);
-				$('#mainMenuBtn').trigger('click',['udfilter',-1]);
+				var itemId = $(event.currentTarget).parent().attr("itemId");
+				if (!AppHelper_IsMobileOrTablet()) itemId = -1;
+				$('#mainMenuBtn').trigger('click',['udfilter',itemId]);
 				$(this).off('mouseup').on('mouseup',function(e){
 					setTimeout(function(elm) {
 						$(this).off('mouseup');

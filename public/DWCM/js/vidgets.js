@@ -1321,7 +1321,7 @@
 						'</span>'+
 				'</h3>'+
 			'</div>'+
-			'<div class="col-xs-5 toolbarDiv">'+
+			'<div class="col-xs-5 toolbarDiv" style="padding-left: 0px;">'+
 			'</div>'+
 		'</div>',
 		btnOk:

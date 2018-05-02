@@ -147,7 +147,7 @@ window.Appn =
 	
 	
 window.App = {
-     version:"1.0.0.59",
+     version:"1.0.0.61",
 	 serverVersion: "",
      Models:{},
      Views:{},
