@@ -607,7 +607,9 @@ var instance =
 			});
 			$placeHolder.find('.itemCell[type="udGrouping"] div').off('taphold').on('taphold',function(event){
 				$(this).data("tapEventFired", true);
-				$('#mainMenuBtn').trigger('click',['udGrouping',-1]);
+				var itemId = $(event.currentTarget).parent().attr("itemId");
+				if (!AppHelper_IsMobileOrTablet()) itemId = -1;
+				$('#mainMenuBtn').trigger('click',['udGrouping',itemId]);
 				$(this).off('mouseup').on('mouseup',function(e){
 					setTimeout(function(elm) {
 						$(this).off('mouseup');
