@@ -190,7 +190,10 @@ var instance =
 	},
     initialize: function(initComplete)
     {
-         App.localeData = App.setLocale();
+		var langCode = localStorage.getItem("currLanguageCode");
+		if (langCode == "en") this.set("language","0");
+		if (langCode == "it") this.set("language","1");
+        App.localeData = App.setLocale(langCode);
         //                                {
         //                                    //App.localeData= data;
         //                                    console.log('App.setLocale OK');
@@ -210,7 +213,7 @@ var instance =
          this.set(Appn.Model.Settings.userName,userName,{validate:true});
          this.set(Appn.Model.Settings.userPassword,userPassword,{validate:true});
          this.set(Appn.Model.Settings.rememberCredentials,rememberCredentials,{validate:true});
-		 this.set("language",language,{validate:true});
+		 //this.set("language",language,{validate:true});
          this.set(Appn.Model.Settings.doclistPageSize,docListPageSize,{validate:true});
         
          this.set(Appn.Model.Settings.dsn,

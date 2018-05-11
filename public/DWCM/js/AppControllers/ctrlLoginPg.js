@@ -6,6 +6,9 @@ var instance =
 				 var pgHtml = compileTemplate(App.Templates.loginPage.html,null);
 				 $(".pageContainer").empty().append(pgHtml);
 				 $(".panel-body .selectpicker").selectpicker();
+				 $("#cmbSelectLanguage").off("changed.bs.select").on("changed.bs.select",
+				 	App.Controllers.loginPage.onLanguageSelected);
+				 
 				 if (App.Models.settings.get(Appn.Model.Settings.rememberCredentials)) 
 				 {
 					var token = {rootNodeSelector:"#LoginPage"}; 	
@@ -13,7 +16,7 @@ var instance =
 				 }
 
 				 $("#mainMenuItems a[dwcmCommand]").off('click').on('click',
-							  App.Controllers.loginPage.onMenuCommand);		
+							  App.Controllers.loginPage.onMenuCommand);
 				 $("#btnConnectToServer").off("click").on("click",App.Controllers.loginPage,function(event)
 					{
 						//store GUI values to model attributes (without validation)
@@ -34,6 +37,12 @@ var instance =
 						}
 					}
 					);
+			 },
+			 onLanguageSelected:function(event,index,newValue,oldValue){
+				var localeCode="en";
+				if (index==1) localeCode = "it";	
+				localStorage.setItem("currLanguageCode",localeCode)
+				location.reload();
 			 },
 			 onMenuCommand:function(evt)
 			 {
