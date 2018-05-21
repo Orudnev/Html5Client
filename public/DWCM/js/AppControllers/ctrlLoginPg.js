@@ -14,6 +14,10 @@ var instance =
 					var token = {rootNodeSelector:"#LoginPage"}; 	
 					AppHelper_WholeMainPaneDialog.setValues_ModelToGui(App.Models.settings,token);
 				 }
+				 else
+				 {
+					$("#cmbSelectLanguage").selectpicker("val",App.Models.settings.get("language"));
+				 }
 
 				 $("#mainMenuItems a[dwcmCommand]").off('click').on('click',
 							  App.Controllers.loginPage.onMenuCommand);
