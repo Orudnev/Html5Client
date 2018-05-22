@@ -92,7 +92,6 @@ var instance =
 			this.storePersist("rememberCredentials",this.get("rememberCredentials"));
 			var localeIndex = this.get("language");
 			this.storePersist("language",localeIndex);
-			App.setLocale(this.get("currLanguageCode"),null);	
 		}
     },
     getLanguageByCode: function(code,languageList){
