@@ -15,7 +15,8 @@ var instance =
 		commonPersistantSettings:[],
         userName: "",
         userPassword: "",
-		smtpSettings:{}
+		smtpSettings:{},
+		validateSmtpSettings:false
     },
     onChange: function(model,options)
     {
@@ -71,6 +72,8 @@ var instance =
 	},
 	validateSmtpSettings:function(attr,errors)
 	{
+		if (!this.get("validateSmtpSettings"))
+			return;
 		if(!attr) attr = this.attributes;
 		AppHelper_Validate.notEmpty(attr,"smtpSettings.host",errors);
 		AppHelper_Validate.notEmpty(attr,"smtpSettings.senderAddress",errors);

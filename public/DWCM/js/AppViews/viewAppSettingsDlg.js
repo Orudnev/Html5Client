@@ -106,10 +106,10 @@ var instance =
 						var viewInstance = event.data.that;
 						if(!$(this).find("i").hasClass("rotateIcon"))
 						{
-							if (!viewInstance.commitGuiChanges())
-							{
-								return;
-							}
+							App.Models.settings.set("validateSmtpSettings",true);
+							var commitResult = viewInstance.commitGuiChanges();
+							App.Models.settings.set("validateSmtpSettings",false);
+							if (!commitResult) return;
 							$(this).find("i").addClass("rotateIcon");
 							App.Models.settings.onSendTestingMessageBtnClicked();
 						}
