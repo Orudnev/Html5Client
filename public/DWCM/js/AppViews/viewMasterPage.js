@@ -338,6 +338,11 @@ var instance =
 		$("#mainMenuItems a[dwcmVolCommand]").off('click').on('click',
 															  App.Controllers.masterPage.onMenuCommandDataGrid);
 	},
+	renderDDGallery: function(){
+		require(['jsx!ddGallery'],function(fjsx){
+			fjsx();
+		});
+	},
 	renderNavigationGridBrief: function(itemList)    
 	{
 		$("#infoPane").remove();

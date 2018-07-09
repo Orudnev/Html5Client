@@ -105,7 +105,7 @@ window.Appn =
 		 areaIconC:  "DWCM/image/DirIcons/FolderMiddle.svg",
 		 areaIconRT: "DWCM/image/DirIcons/FolderStart.svg",
 		 areaIconRC: "DWCM/image/DirIcons/FolderStart.svg",
-		 allVolumes: "DWCM/image/DirIcons/Volume_grey.svg",
+		 allVolumes: "DWCM/image/DirIcons/FolderStart.svg",
 		 standardDirIcon: "DWCM/image/DirIcons/VolumeStd.svg",
 		 standardDirIconClosed: "DWCM/image/DirIcons/VolumeStdConserved.svg",
 		 standardDirIconConserved: "DWCM/image/DirIcons/VolumeStdConserved.svg",

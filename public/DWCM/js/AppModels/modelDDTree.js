@@ -5,7 +5,8 @@ var instance =
     {
         treeData : [],
         lastSelectedNode: null,
-        lastPathNodeChain:[]
+        lastPathNodeChain:[],
+        currDirItems:[]
     },
     doRequestDDtreNodes:function(nodeId)
     {
@@ -44,7 +45,7 @@ var instance =
                   nodes:[]
                  }
                 ];
-
+            App.localeData.ddtree_DF = App.Models.settings.get("dsn"); 
             token.that.set('treeData',
                 [  
                 {
@@ -585,7 +586,7 @@ var instance =
 		if (dirId=='DD' || dirId=="DF" || dirId=="WF" || dirId=="QST") 
 		{
  		   //skip automatically to "AllAreas"
-           selNodeObj = this.getNode("AllAreas"); 
+           selNodeObj = this.getNode("DF"); 
            this.set('lastSelectedNode',selNodeObj);    
            list = selNodeObj.nodes; 
 		}
@@ -620,7 +621,11 @@ var instance =
             return;
         }
         if (list)
-            App.Views.masterPage.renderNavigationGridBrief(list);
+        {
+           this.set('currDirItems',list); 
+           App.Views.masterPage.renderDDGallery();
+        }
+        //    App.Views.masterPage.renderNavigationGridBrief(list);
     }
     
     }); 

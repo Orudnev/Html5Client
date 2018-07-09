@@ -153,7 +153,7 @@
         var delimiterWidth = 0;
         // 1. build path 
         $.each(itemList, function addItem(id, item) {
-			if (item.id != "DD" && item.id != "DF") {
+			if (item.id != "DD" ) {
             var delimiter = $(that.template.delimiter);
             that.$wrapper.append(delimiter);
             if (delimiterWidth == 0) delimiterWidth = delimiter.outerWidth(true);

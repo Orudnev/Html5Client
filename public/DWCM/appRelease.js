@@ -21,6 +21,7 @@ require.config(
 			 "text":appStartingUrlPrefix+"DWCM/js/require/text",
 			 //jsx modules
 			 "glbSearch":appStartingUrlPrefix+"DWCM/jsx/globalSearch",
+			 "ddGallery":appStartingUrlPrefix+"DWCM/jsx/ddGallery",
 			 
  			 "bootstrapTable_TapRow": appStartingUrlPrefix+"DWCM/js/bootstrapTable_Plugins/tapRow",
 
