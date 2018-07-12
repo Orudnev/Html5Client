@@ -463,6 +463,11 @@ var instance =
 	},
 	renderPathBar: function()
 	{
+		require(['jsx!pathBar'],function(fjsx){
+			fjsx();
+		});
+
+		/*
 		var itemChain = App.Models.ddTree.getPathNodeChain();
 		$('#pathBarContainer').pathControl({
 		data: itemChain,
@@ -471,7 +476,8 @@ var instance =
 			App.Models.ddTree.setSelectedNode(item);
 			App.Views.masterPage.ddDrawSelection();
 		}
-		}); 
+		});
+		 */
      },
 	renderInfo:function(dialogId)
 	{

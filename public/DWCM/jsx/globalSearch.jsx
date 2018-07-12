@@ -65,7 +65,7 @@ var instance = function(){
 		  
 		return (
   		<div style={cStyle}>
-			<div className="col-xs-8">
+			<div className="col-xs-9">
 				<div  style={hStyle} className="headerColor">
 					{headerIcon}
 					{App.localeData.globalSearch}

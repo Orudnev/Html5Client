@@ -22,7 +22,9 @@ require.config(
 			 //jsx modules
 			 "glbSearch":appStartingUrlPrefix+"DWCM/jsx/globalSearch",
 			 "ddGallery":appStartingUrlPrefix+"DWCM/jsx/ddGallery",
+			 "pathBar":appStartingUrlPrefix+"DWCM/jsx/pathBar",
 			 
+
  			 "bootstrapTable_TapRow": appStartingUrlPrefix+"DWCM/js/bootstrapTable_Plugins/tapRow",
 
 			 

@@ -259,6 +259,8 @@ var instance =
         if (node == null) node = {nodes:this.get('treeData')};
         if (!node.nodes)
             return null;
+        var rv = node.nodes.find(function(itm){if (itm.id == dirId) return itm});
+        if (rv) return rv;    
         for(var i=0;i<node.nodes.length;i++)
         {
             var childNode = node.nodes[i];

@@ -117,91 +117,17 @@ var instance = function(){
       handleOnDirItemClick:function(dirItemId)
       {
         this.setState({selectedIndex: dirItemId});
-		var node = App.Models.ddTree.getNode(dirItemId);
+		var parentNode = App.Models.ddTree.get("lastSelectedNode");
+		var node = App.Models.ddTree.getNodea(parentNode,dirItemId);
 		App.Models.ddTree.setSelectedNode(node);
 		App.Views.masterPage.showAndSelectNode(node);	
       },
-	  handleToolbarBtnClick:function(strCommand)
-	  {
-		  if (strCommand=='cancel' && this.state.status=='readyToNewSearch')
-			  		this.dlgRemove(); 
-		  if (strCommand=='search' && this.state.status=='readyToNewSearch'){
-			 this.doStartSearch();	  
-		  }
-		  if (strCommand=='cancel-search'){
-			   this.doCancelSearch();
-			 		setTimeout(()=>this.setState({status:'readyToNewSearch'}),2000);    
-		  }
-		  if (strCommand=='ok'){
-			 App.Models.commonParams.set('globalSearchLastResult',this.state.rows);
-			 this.dlgRemove(); 
-			 App.Controllers.masterPage.doOpenUDFilter(
-				 this.state.rows[this.state.selectedIndex].volumeName,
-				 this.state.searchStr);
-		  }			        
-	  },
 	  handleSearchStrChange:function(e)
 	  {
 		var searchStr = e.target.value.toLowerCase();  
 		var filteredItemList = this.state.initialItemList.filter(itm=>itm.text.toLowerCase().indexOf(searchStr)!=-1);
 		this.setState({searchStr: e.target.value,itemList:filteredItemList});  
 	  },
-	  doStartSearch:function(){
-		  this.setState({status:'search',rows:[],selectedIndex: -1});
-		  App.Models.commonParams.set('globalSearchLastResult',[]);
-		  App.Models.commonParams.set('globalSearchStr',this.state.searchStr);
-		  //args: 	command - "startSearch","getNextResult","cancelSearch"
-		  //		searchStr, bool fullText, string fromDate,string toDate,string maxDocs
-		  AppHelper_JsonWsEx('GlobalSearch',['startSearch',this.state.searchStr,false,'','','-1'],
-		   		function(resultObj){
-				  if (!resultObj.bResult)
-				  {
-					 throw "Error: todo:display error should be implemented"; 	
-				  }
-				  this.doGetNextResult();
-			  	},this,true);		  
-	  },
-	  doGetNextResult:function(){
-		  AppHelper_JsonWsEx('GlobalSearch',['getNextResult','','','','',''],
-		   		function(resultObj){
-				  if (!resultObj.bResult)
-				  {
-					 throw "Error: todo:display error should be implemented"; 	
-				  }
-			  	  if(!resultObj.data[0].stop){
-					  //search is not completed, request next result					  
-					  setTimeout(()=>this.doGetNextResult(),500);
-				  }else{
-					  //search is completed
-		  			  this.setState({status:'readyToNewSearch'});
-				  }
-			  	  	
-			  	  if (resultObj.data[0].numFoundDocuments==-1) return;
-			      // result is not empty
-			  	  var rowsCopy = this.state.rows.slice(0);
-			  	  for(var i=0;i<resultObj.data.length;i++){
-					  var newRow = resultObj.data[i];
-					  if (newRow.numFoundDocuments == -1) continue;
-					  var newRowId = this.state.rows.length+i;
-					  newRow.id = newRowId;
-					  rowsCopy.push(newRow);
-				  } 
-			  	  this.setState({rows: rowsCopy});
-			  	},this,true);		  
-			  
-	  },
-	  doCancelSearch:function(){
-		this.setState({status:'cancelling'});
-		AppHelper_JsonWsEx('GlobalSearch',['cancelSearch','','','','',''],
-			function(resultObj){
-				this.setState({status:'readyToNewSearch'});		
-			},this,true);		  
-	  },
-	  dlgRemove:function(){
-		this.setState({status:"close"});  
-		$("#mpall").removeClass("nullHeight"); //hide panes
-		$("#mpMainPane").removeClass("nullHeight"); //hide panes	
-	  },	  
       render: function () {
 
 		var strStyle=
